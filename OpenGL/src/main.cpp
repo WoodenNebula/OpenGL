@@ -7,4 +7,5 @@ int main()
 {
 	std::cout << "Hello World!" << std::endl;
 	std::cout << "THIS SHOULD WORK :D" << std::endl;
+	std::cout << "Final test" << std::endl;
 }
