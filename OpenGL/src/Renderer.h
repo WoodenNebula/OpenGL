@@ -5,6 +5,7 @@
 
 #include "ErrorHandler.h"
 #include "Shader.h"
+#include "VertexArrayObject.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
@@ -29,8 +30,18 @@ namespace Renderer
 	// Returns true if window is closed and the render loop is to be stopped
 	bool EndRenderLoop(Window* window);
 
-//TODO: properly abstract the function
-	void Draw(unsigned int& vao, VertexBuffer& vb, IndexBuffer& ib, Shaders& shader, Window* window);
+	// Hint OpenGl to draw only the borders
+	void LineMode(bool drawInLineMode);
+
+	/// <summary>
+	/// Binds the VAO, VBO, IBO, uses shaderprogram and finally renders the vertices as triangles
+	/// </summary>
+	/// <param name="VAO">: Vertex Array Object</param>
+	/// <param name="VBO">: Vertex Buffer Object</param>
+	/// <param name="IBO">: Elemnt/Index Buffer Object</param>
+	/// <param name="shader">: Shader Object</param>
+	/// <param name="window">: Window object to render to</param>
+	void Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shaders& shader, Window* window);
 
 
 	void Exit(Window* window);

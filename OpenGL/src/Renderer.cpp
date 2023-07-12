@@ -68,7 +68,13 @@ bool Renderer::EndRenderLoop(Window* window)
 	return glfwWindowShouldClose(window);
 }
 
-void Renderer::Draw(unsigned int& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shaders& shader, Window* window)
+void Renderer::LineMode(bool drawInLineMode)
+{
+	if (drawInLineMode)
+		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
+}
+
+void Renderer::Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shaders& shader, Window* window)
 {
 	/* Color of background of window */
 	GLCall(glClearColor(0.07f, 0.13f, 0.17f, 1.0f));
@@ -78,7 +84,7 @@ void Renderer::Draw(unsigned int& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shad
 
 
 	shader.UseShaderProgram();
-	GLCall(glBindVertexArray(VAO));
+	VAO.Bind();
 
 //TODO: CONFIGURE DEEZ
 	///
