@@ -1,4 +1,6 @@
 #pragma once
+#ifndef ERROR_HANDLER
+#define ERROR_HANDLER
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -18,3 +20,6 @@ const std::string GLEnumErrorDecoder(GLenum error);
 
 /* Logs the error details */
 bool GLLogCall(const char* functionName, int line, const char* file);
+
+
+#endif // !ERROR_HANDLER

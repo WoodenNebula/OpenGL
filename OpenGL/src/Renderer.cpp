@@ -25,29 +25,26 @@ void Renderer::Init(int openGL_Version_Major, int openGL_Version_Minor)
 
 }
 
-GLFWwindow* Renderer::CreateWindow(int width, int height, const char* windowName)
+Window* Renderer::CreateWindow(int width, int height, const char* windowName)
 {
-	GLFWwindow* window = glfwCreateWindow(width, height, windowName, NULL, NULL);
-
+	Window* window = glfwCreateWindow(width, height, windowName, NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "[Error] : line " << __LINE__ << " -> " << NULL << "\n\tWindow Creation Failed" << std::endl;
 		glfwTerminate();
+		return 0;
 	}
-
-	glfwMakeContextCurrent(window);
-
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-	/* Initializing GLEW library */
-	if (glewInit() != GLEW_OK)
+	else
 	{
-		std::cout << "[Error] : GLEW initialization failed!" << std::endl;
-		abort();
-	}
+		glfwMakeContextCurrent(window);
 
+		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+		InitGlew();
+	}
 	return window;
 }
+
 
 void Renderer::SetViewPort(int width, int height)
 {
@@ -93,7 +90,7 @@ void Renderer::Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO,
 	/// Data type of indices
 	/// Index of indices 
 	/// 
-	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
+	GLCall(glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0));
 
 	/* Swap front and back buffers */
 	GLCall(glfwSwapBuffers(window));
@@ -102,9 +99,8 @@ void Renderer::Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO,
 	GLCall(glfwPollEvents());
 }
 
-void Renderer::Exit(Window* window)
+void Renderer::Exit()
 {
-	glfwDestroyWindow(window);
 	glfwTerminate();
 }
 

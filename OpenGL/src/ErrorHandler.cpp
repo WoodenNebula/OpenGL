@@ -1,8 +1,6 @@
 #include "ErrorHandler.h"
 
 #include <iostream>
-#include <string>
-
 
 void GLClearErrors()
 {

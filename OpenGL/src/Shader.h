@@ -1,9 +1,11 @@
 #pragma once
+#ifndef SHADER
+#define SHADER
 
 #include "ErrorHandler.h"
 
-#include <fstream>
-#include <sstream>
+#include <string>
+
 
 enum class ShaderType
 {
@@ -34,3 +36,4 @@ private:
 	unsigned int m_ProgramID;
 };
 
+#endif // !SHADER

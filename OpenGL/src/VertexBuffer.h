@@ -1,4 +1,6 @@
 #pragma once
+#ifndef VERTEX_BUFFER
+#define VERTEX_BUFFER
 
 #include "ErrorHandler.h"
 
@@ -25,3 +27,4 @@ private:
 	unsigned int m_RendererID;
 };
 
+#endif // !VERTEX_BUFFER

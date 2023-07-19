@@ -1,4 +1,6 @@
 #pragma once
+#ifndef VERTEX_ARRAY
+#define VERTEX_ARRAY
 
 #include "ErrorHandler.h"
 
@@ -26,3 +28,5 @@ public:
 private:
 	unsigned int m_VAO_ID;
 };
+
+#endif // !VERTEX_ARRAY

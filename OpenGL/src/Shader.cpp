@@ -3,6 +3,8 @@
 #include "Shader.h"
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 Shaders::Shaders() :m_ProgramID(0) {};
 

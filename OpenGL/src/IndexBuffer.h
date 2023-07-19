@@ -1,4 +1,6 @@
 #pragma once
+#ifndef INDEX_BUFFER
+#define INDEX_BUFFER
 
 #include "ErrorHandler.h"
 
@@ -24,3 +26,4 @@ private:
 	unsigned int m_RendererID;
 };
 
+#endif // !INDEX_BUFFER
