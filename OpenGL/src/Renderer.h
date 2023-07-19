@@ -41,7 +41,7 @@ namespace Renderer
 	/// <param name="IBO">: Elemnt/Index Buffer Object</param>
 	/// <param name="shader">: Shader Object</param>
 	/// <param name="window">: Window object to render to</param>
-	void Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shaders& shader, Window* window);
+	void Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shader& shader, Window* window);
 
 
 	void Exit();

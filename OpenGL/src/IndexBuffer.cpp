@@ -1,9 +1,13 @@
 #include "Buffer.h"
 
-IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)
+IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int size)
+	:m_RendererID(0)
 {
 	GLCall(glGenBuffers(1, &m_RendererID));
-	this->SetData(data, count);
+
+	this->count = size / (sizeof(unsigned int));
+
+	this->SetData(data, size);
 }
 
 IndexBuffer::~IndexBuffer()
@@ -21,9 +25,9 @@ inline void IndexBuffer::UnBind() const
 	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
 
-inline void IndexBuffer::SetData(const unsigned int* data, const unsigned int count)
+inline void IndexBuffer::SetData(const unsigned int* data, const unsigned int size)
 {
 	this->Bind();
-	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count, data, GL_STATIC_DRAW));
+	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 	//this->UnBind();
 }

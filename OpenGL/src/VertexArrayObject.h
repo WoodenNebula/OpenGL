@@ -11,13 +11,13 @@ public:
 	VertexArrayObject();
 	~VertexArrayObject();
 
-	void EnableVAO() const;
+	void EnableVAO(unsigned int attribIndex) const;
 
 	void Bind() const;
 	void UnBind() const;
 
 	/// <summary>
-	/// Telling OpenGL how the data within a vertex is arranged in the GPU buffer
+	/// Tells OpenGL how the data within a vertex is arranged in the GPU buffer
 	/// and automatically enables the VAO
 	/// </summary>
 	/// <param name="attribIndex">: Position of Vertex Attribute within a vertex(position, texture coord, color, etc)</param>

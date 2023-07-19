@@ -68,10 +68,13 @@ bool Renderer::EndRenderLoop(Window* window)
 void Renderer::LineMode(bool drawInLineMode)
 {
 	if (drawInLineMode)
+	{
 		GLCall(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
+	}
+	else return;
 }
 
-void Renderer::Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shaders& shader, Window* window)
+void Renderer::Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shader& shader, Window* window)
 {
 	/* Color of background of window */
 	GLCall(glClearColor(0.07f, 0.13f, 0.17f, 1.0f));
@@ -90,7 +93,7 @@ void Renderer::Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO,
 	/// Data type of indices
 	/// Index of indices 
 	/// 
-	GLCall(glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0));
+	GLCall(glDrawElements(GL_TRIANGLES, IBO.count, GL_UNSIGNED_INT, 0));
 
 	/* Swap front and back buffers */
 	GLCall(glfwSwapBuffers(window));

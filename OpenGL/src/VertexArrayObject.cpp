@@ -11,9 +11,9 @@ VertexArrayObject::~VertexArrayObject()
 	GLCall(glDeleteVertexArrays(1, &m_VAO_ID));
 }
 
-void VertexArrayObject::EnableVAO() const
+void VertexArrayObject::EnableVAO(unsigned int attribIndex) const
 {
-	GLCall(glEnableVertexAttribArray(0));
+	GLCall(glEnableVertexAttribArray(attribIndex));
 }
 
 void VertexArrayObject::Bind() const
@@ -29,5 +29,5 @@ void VertexArrayObject::UnBind() const
 void VertexArrayObject::ConfigureVertexAttribPointer(const unsigned int attribIndex, const unsigned int vertexElementCount, const unsigned int strideSize, void* attribOffset)
 {
 	GLCall(glVertexAttribPointer(attribIndex, vertexElementCount, GL_FLOAT, GL_FALSE, strideSize, attribOffset));
-	this->EnableVAO();
+	this->EnableVAO(attribIndex);
 }

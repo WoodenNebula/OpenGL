@@ -6,26 +6,25 @@
 #include <fstream>
 #include <sstream>
 
-Shaders::Shaders() :m_ProgramID(0) {};
-
-Shaders::Shaders(const char* shaderPath)
+Shader::Shader(const char* shaderPath)
+	:m_FilePath(shaderPath), m_ProgramID(0)
 {
-	auto [vertexShaderSrcCode, fragmentShaderSrcCode] = m_ParseShader(shaderPath);
-	m_ProgramID = m_CreateShaderProgram(vertexShaderSrcCode.c_str(), fragmentShaderSrcCode.c_str());
+	ShaderSources source = ParseShader(shaderPath);
+	m_ProgramID = CreateShaderProgram(source.VertexSrc, source.FragmentSrc);
 }
 
-void Shaders::UseShaderProgram()
+void Shader::UseShaderProgram()
 {
 	GLCall(glUseProgram(m_ProgramID));
 }
 
-unsigned int Shaders::GetProgramID()
+unsigned int Shader::GetProgramID()
 {
 	return m_ProgramID;
 }
 
 
-ShaderSources Shaders::m_ParseShader(const char* filePath)
+ShaderSources Shader::ParseShader(const char* filePath)
 {
 	std::fstream shaderFile(filePath);
 	std::string line;
@@ -59,11 +58,11 @@ ShaderSources Shaders::m_ParseShader(const char* filePath)
 }
 
 /* creates a shader program that has to be attached and linked */
-unsigned int Shaders::m_CreateShaderProgram(const char* vertexShaderSrc, const char* fragmentShaderSrc)
+unsigned int Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc)
 {
 	unsigned int vertexShader, fragmentShader;
-	vertexShader = m_CompileShader(ShaderType::VERTEX, vertexShaderSrc);
-	fragmentShader = m_CompileShader(ShaderType::FRAGMENT, fragmentShaderSrc);
+	vertexShader = CompileShader(ShaderType::VERTEX, vertexShaderSrc.c_str());
+	fragmentShader = CompileShader(ShaderType::FRAGMENT, fragmentShaderSrc.c_str());
 
 
 	GLCall(unsigned int shaderProgram = glCreateProgram());
@@ -82,35 +81,62 @@ unsigned int Shaders::m_CreateShaderProgram(const char* vertexShaderSrc, const c
 	return shaderProgram;
 }
 
-unsigned int Shaders::m_CompileShader(ShaderType type, const char* shaderSrc)
+unsigned int Shader::CompileShader(ShaderType type, const std::string& shaderSrc)
 {
-	unsigned int shader;
+	/// Compilation Process
+	unsigned int shaderID;
+	const char* src = shaderSrc.c_str();
 	if (type == ShaderType::VERTEX)
 	{
-		GLCall(shader = glCreateShader(GL_VERTEX_SHADER));
+		GLCall(shaderID = glCreateShader(GL_VERTEX_SHADER));
 	}
 	else if (type == ShaderType::FRAGMENT)
 	{
-		GLCall(shader = glCreateShader(GL_FRAGMENT_SHADER));
+		GLCall(shaderID = glCreateShader(GL_FRAGMENT_SHADER));
 	}
 	else
 	{
 		std::cout << "ERROR::SHADER::BadShaderType" << std::endl;
 		__debugbreak();
 	}
-	GLCall(glShaderSource(shader, 1, &shaderSrc, NULL));
-	GLCall(glCompileShader(shader));
+	GLCall(glShaderSource(shaderID, 1, &src, nullptr));
+	GLCall(glCompileShader(shaderID));
 
+	// Error Handling
 	int success;
-	char infoLog[512];
-	GLCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &success));
-
+	GLCall(glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success));
 	if (!success)
 	{
-		GLCall(glGetShaderInfoLog(shader, 512, NULL, infoLog));
+		int length;
+		GLCall(glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &length));
+
+		char* infoLog = (char*)alloca(length * sizeof(char));
+		GLCall(glGetShaderInfoLog(shaderID, length, &length, infoLog));
+
 		std::cout << "ERROR::SHADER::" << (type == ShaderType::VERTEX ? "VERTEX" : "FRAGMENT") << "::COMPILATION_FAILED\n"
 			<< infoLog << std::endl;
+
+		return 0;
 	}
 
-	return shader;
+	return shaderID;
+}
+
+void Shader::SetUniform4F(const std::string& name, float v0, float v1, float v2, float v3)
+{
+	GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
+}
+
+unsigned int Shader::GetUniformLocation(const std::string& name)
+{
+	// check if the uniform already exists and if it does, return its location
+	if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
+		return m_UniformLocationCache[name];
+
+	GLCall(int location = glGetUniformLocation(m_ProgramID, name.c_str()));
+	if (location == -1)
+		std::cout << "SHADER::UNIFORM -> Uniform "<< name <<" Doesn't Exist" << std::endl;
+
+	m_UniformLocationCache[name] = location;
+	return location;
 }

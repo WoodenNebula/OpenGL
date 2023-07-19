@@ -29,7 +29,7 @@ private:
 class IndexBuffer
 {
 public:
-	IndexBuffer(const unsigned int* data, unsigned int count);
+	IndexBuffer(const unsigned int* data, unsigned int size);
 	~IndexBuffer();
 
 	void Bind() const;
@@ -41,8 +41,11 @@ public:
 	/// 
 	/// </summary>
 	/// <param name="data">pointer to the array of indices</param>
-	/// <param name="count">number of elements within the array data (count)</param>
-	void SetData(const unsigned int* data, const unsigned int count);
+	/// <param name="size">size of the element buffer array</param>
+	void SetData(const unsigned int* data, const unsigned int size);
+
+public:
+	unsigned int count;
 
 private:
 	unsigned int m_RendererID;
