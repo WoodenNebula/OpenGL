@@ -193,12 +193,11 @@
     <ClInclude Include="dependencies\include\GL\glew.h" />
     <ClInclude Include="dependencies\include\GL\glxew.h" />
     <ClInclude Include="dependencies\include\GL\wglew.h" />
+    <ClInclude Include="src\Buffer.h" />
     <ClInclude Include="src\ErrorHandler.h" />
-    <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\VertexArrayObject.h" />
-    <ClInclude Include="src\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glew32s.lib" />

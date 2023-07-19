@@ -7,8 +7,7 @@
 
 #include "Shader.h"
 #include "VertexArrayObject.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
+#include "Buffer.h"
 
 #include <iostream>
 #include <string>
