@@ -25,24 +25,30 @@ void Renderer::Init(int openGL_Version_Major, int openGL_Version_Minor)
 
 }
 
-Window* Renderer::CreateWindow(int width, int height, const char* windowName)
+
+ Window* Renderer::GetWindow() const 
 {
-	Window* window = glfwCreateWindow(width, height, windowName, NULL, NULL);
-	if (window == NULL)
+	ASSERT(m_window != nullptr);
+	return m_window;
+};
+
+
+ void Renderer::CreateWindow(int width, int height, const char* windowName)
+{
+	m_window = glfwCreateWindow(width, height, windowName, NULL, NULL);
+	if (m_window == nullptr)
 	{
-		std::cout << "[Error] : line " << __LINE__ << " -> " << NULL << "\n\tWindow Creation Failed" << std::endl;
+		std::cout << "[Error] : line " << __LINE__ << " -> " << "\n\tWindow Creation Failed" << std::endl;
 		glfwTerminate();
-		return 0;
 	}
 	else
 	{
-		glfwMakeContextCurrent(window);
+		glfwMakeContextCurrent(m_window);
 
-		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+		glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
 
 		InitGlew();
 	}
-	return window;
 }
 
 
@@ -52,17 +58,17 @@ void Renderer::SetViewPort(int width, int height)
 	GLCall(glViewport(0, 0, width, height));
 }
 
-void Renderer::ProcessInput(Window* window)
+void Renderer::ProcessInput()
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
-		glfwSetWindowShouldClose(window, true);
+		glfwSetWindowShouldClose(m_window, true);
 	}
 }
 
-bool Renderer::EndRenderLoop(Window* window)
+bool Renderer::EndRenderLoop()
 {
-	return glfwWindowShouldClose(window);
+	return glfwWindowShouldClose(m_window);
 }
 
 void Renderer::LineMode(bool drawInLineMode)
@@ -74,7 +80,7 @@ void Renderer::LineMode(bool drawInLineMode)
 	else return;
 }
 
-void Renderer::Draw(VertexArray& VA, IndexBuffer& IBO, Shader& shader, Window* window)
+void Renderer::Draw(const VertexArray& VA, const IndexBuffer& IBO, const Shader& shader)
 {
 	/* Color of background of window */
 	GLCall(glClearColor(0.6f, 0.693f, 0.69f, 1.0f));
@@ -94,10 +100,10 @@ void Renderer::Draw(VertexArray& VA, IndexBuffer& IBO, Shader& shader, Window* w
 	/// Data type of indices
 	/// Index of indices 
 	/// 
-	GLCall(glDrawElements(GL_TRIANGLES, IBO.count, GL_UNSIGNED_INT, 0));
+	GLCall(glDrawElements(GL_TRIANGLES, IBO.GetCount(), GL_UNSIGNED_INT, 0));
 
 	/* Swap front and back buffers */
-	GLCall(glfwSwapBuffers(window));
+	GLCall(glfwSwapBuffers(m_window));
 
 	/* Poll for events and processes */
 	GLCall(glfwPollEvents());

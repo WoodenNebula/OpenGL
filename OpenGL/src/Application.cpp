@@ -9,13 +9,13 @@
 
 int main()
 {
-
-	Renderer::Init(3, 3);
+	Renderer renderer;
+	renderer.Init(3, 3);
 	uint32_t width = 800, height = 600;
-	Window* window = Renderer::CreateWindow(width, height, "Window");
+	renderer.CreateWindow(width, height, "Window");
 
 
-	Renderer::SetViewPort(800, 600);
+	renderer.SetViewPort(800, 600);
 	// Texture - Black [0.0f, 0.5f)
 	// Texture - White [0.5f, 0.5f]
 
@@ -50,12 +50,12 @@ int main()
 		VA.AddBuffer(VBO, layout);
 
 
-		Renderer::LineMode(false);
+		renderer.LineMode(false);
 
 		shader.Bind();
 		// Render Loop
 		// -------------------
-		while (!Renderer::EndRenderLoop(window))
+		while (!renderer.EndRenderLoop())
 		{
 			float time = glfwGetTime();
 			/* Render here */
@@ -63,14 +63,13 @@ int main()
 
 			shader.SetUniform4F("iColor", red, sin(red), cos(red), 1.0f);
 
-
-			Renderer::ProcessInput(window);
-			Renderer::Draw(VA, IBO, shader, window);
+			renderer.ProcessInput();
+			renderer.Draw(VA, IBO, shader);
 		}
 
 
 	}
-	Renderer::Exit();
+	renderer.Exit();
 
 	return 0;
 }

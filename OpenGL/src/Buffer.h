@@ -44,9 +44,10 @@ public:
 	/// <param name="size">size of the element buffer array</param>
 	void SetData(const uint32_t* data, const uint32_t size);
 
-public:
-	uint32_t count;
+	uint32_t GetCount() const;
+
+	uint32_t GetObjectID() const;
 
 private:
-	uint32_t m_RendererID;
+	uint32_t m_RendererID, m_count;
 };

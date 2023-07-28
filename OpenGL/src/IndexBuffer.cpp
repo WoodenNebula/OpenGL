@@ -5,7 +5,7 @@ IndexBuffer::IndexBuffer(const uint32_t* data, uint32_t size)
 {
 	GLCall(glGenBuffers(1, &m_RendererID));
 
-	this->count = size / (sizeof(uint32_t));
+	this->m_count = size / (sizeof(uint32_t));
 
 	this->SetData(data, size);
 }
@@ -31,3 +31,8 @@ inline void IndexBuffer::SetData(const uint32_t* data, const uint32_t size)
 	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 	//this->UnBind();
 }
+
+uint32_t IndexBuffer::GetCount() const { return m_count; }
+
+uint32_t IndexBuffer::GetObjectID() const { return m_RendererID; };
+

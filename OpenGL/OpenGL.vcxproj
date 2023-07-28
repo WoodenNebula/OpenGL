@@ -197,7 +197,6 @@
     <ClInclude Include="src\ErrorHandler.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
-    <ClInclude Include="src\stb_image.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\VertexBufferLayout.h" />
   </ItemGroup>

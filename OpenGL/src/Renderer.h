@@ -5,8 +5,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Shader.h"
 #include "VertexArray.h"
+#include "VertexBufferLayout.h"
+#include "Shader.h"
 #include "Buffer.h"
 
 #include <iostream>
@@ -14,21 +15,23 @@
 
 #define Window GLFWwindow
 
-namespace Renderer
+class Renderer
 {
+private:
+	Window* m_window;
+public:
 	// Initializes GLFW and sets opengl version and core profile
 	void Init(int openGL_Version_Major, int openGL_Version_Minor);
 
-	// Creates a resizeable window on the Window* provided after making it the current context and initializing glew as well
-	Window* CreateWindow(int width, int height, const char* windowName);
+	Window* GetWindow() const;
 
 	// Sets OpenGL view port while performing errorchecks
 	void SetViewPort(int width, int height);
 
-	void ProcessInput(Window* window);
+	void ProcessInput();
 
 	// Returns true if window is closed and the render loop is to be stopped
-	bool EndRenderLoop(Window* window);
+	bool EndRenderLoop();
 
 	// Hint OpenGl to draw only the borders
 	void LineMode(bool drawInLineMode);
@@ -40,17 +43,19 @@ namespace Renderer
 	/// <param name="IBO">: Elemnt/Index Buffer Object</param>
 	/// <param name="shader">: Shader Object</param>
 	/// <param name="window">: Window object to render to</param>
-	void Draw(VertexArray& VA, IndexBuffer& IBO, Shader& shader, Window* window);
+	void Draw(const VertexArray& VA, const IndexBuffer& IBO, const Shader& shader);
 
 
 	void Exit();
-}
 
-// Internal functions
-namespace Renderer
-{
+public:
+	// Creates a resizeable window on the Window* provided after making it the current context and initializing glew as well
+	void CreateWindow(int width, int height, const char* windowName);
+
+
+private:
 	// Initialize GLEW after having a valid window context
-	inline void InitGlew()
+	void InitGlew()
 	{
 		/* Initializing GLEW library */
 		if (glewInit() != GLEW_OK)
@@ -61,11 +66,10 @@ namespace Renderer
 	}
 
 	// Callback function for resizing windows
-	inline void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+	static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
 		glViewport(0, 0, width, height);
 	}
-}
-
+};
 
 #endif // !RENDERER
