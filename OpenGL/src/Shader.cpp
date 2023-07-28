@@ -18,7 +18,7 @@ void Shader::UseShaderProgram()
 	GLCall(glUseProgram(m_ProgramID));
 }
 
-unsigned int Shader::GetProgramID()
+uint32_t Shader::GetProgramID()
 {
 	return m_ProgramID;
 }
@@ -58,14 +58,14 @@ ShaderSources Shader::ParseShader(const char* filePath)
 }
 
 /* creates a shader program that has to be attached and linked */
-unsigned int Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc)
+uint32_t Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc)
 {
-	unsigned int vertexShader, fragmentShader;
+	uint32_t vertexShader, fragmentShader;
 	vertexShader = CompileShader(ShaderType::VERTEX, vertexShaderSrc.c_str());
 	fragmentShader = CompileShader(ShaderType::FRAGMENT, fragmentShaderSrc.c_str());
 
 
-	GLCall(unsigned int shaderProgram = glCreateProgram());
+	GLCall(uint32_t shaderProgram = glCreateProgram());
 
 	GLCall(glAttachShader(shaderProgram, vertexShader));
 	GLCall(glAttachShader(shaderProgram, fragmentShader));
@@ -81,10 +81,10 @@ unsigned int Shader::CreateShaderProgram(const std::string& vertexShaderSrc, con
 	return shaderProgram;
 }
 
-unsigned int Shader::CompileShader(ShaderType type, const std::string& shaderSrc)
+uint32_t Shader::CompileShader(ShaderType type, const std::string& shaderSrc)
 {
 	/// Compilation Process
-	unsigned int shaderID;
+	uint32_t shaderID;
 	const char* src = shaderSrc.c_str();
 	if (type == ShaderType::VERTEX)
 	{
@@ -110,7 +110,7 @@ unsigned int Shader::CompileShader(ShaderType type, const std::string& shaderSrc
 		int length;
 		GLCall(glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &length));
 
-		char* infoLog = (char*)alloca(length * sizeof(char));
+		char* infoLog = (char*)_malloca(length * sizeof(char));
 		GLCall(glGetShaderInfoLog(shaderID, length, &length, infoLog));
 
 		std::cout << "ERROR::SHADER::" << (type == ShaderType::VERTEX ? "VERTEX" : "FRAGMENT") << "::COMPILATION_FAILED\n"
@@ -127,7 +127,7 @@ void Shader::SetUniform4F(const std::string& name, float v0, float v1, float v2,
 	GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
 }
 
-unsigned int Shader::GetUniformLocation(const std::string& name)
+uint32_t Shader::GetUniformLocation(const std::string& name)
 {
 	// check if the uniform already exists and if it does, return its location
 	if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
@@ -135,7 +135,10 @@ unsigned int Shader::GetUniformLocation(const std::string& name)
 
 	GLCall(int location = glGetUniformLocation(m_ProgramID, name.c_str()));
 	if (location == -1)
+	{
 		std::cout << "SHADER::UNIFORM -> Uniform "<< name <<" Doesn't Exist" << std::endl;
+		ASSERT(false);
+	}
 
 	m_UniformLocationCache[name] = location;
 	return location;

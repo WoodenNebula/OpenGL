@@ -5,10 +5,10 @@
 class VertexBuffer
 {
 public:
-	VertexBuffer(const void* data, unsigned int size);
+	VertexBuffer(const void* data, uint32_t size);
 	~VertexBuffer();
 
-	unsigned int GetObjectID() const;
+	uint32_t GetObjectID() const;
 
 	void Bind() const;
 	void UnBind() const;
@@ -20,16 +20,16 @@ public:
 	/// </summary>
 	/// <param name="data">pointer to the array of vertices</param>
 	/// <param name="size">size of the array data (size)</param>
-	void SetData(const void* data, const unsigned int size);
+	void SetData(const void* data, const uint32_t size);
 private:
-	unsigned int m_RendererID;
+	uint32_t m_RendererID;
 };
 
 
 class IndexBuffer
 {
 public:
-	IndexBuffer(const unsigned int* data, unsigned int size);
+	IndexBuffer(const uint32_t* data, uint32_t size);
 	~IndexBuffer();
 
 	void Bind() const;
@@ -42,11 +42,11 @@ public:
 	/// </summary>
 	/// <param name="data">pointer to the array of indices</param>
 	/// <param name="size">size of the element buffer array</param>
-	void SetData(const unsigned int* data, const unsigned int size);
+	void SetData(const uint32_t* data, const uint32_t size);
 
 public:
-	unsigned int count;
+	uint32_t count;
 
 private:
-	unsigned int m_RendererID;
+	uint32_t m_RendererID;
 };

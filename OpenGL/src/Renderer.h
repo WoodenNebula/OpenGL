@@ -6,7 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Shader.h"
-#include "VertexArrayObject.h"
+#include "VertexArray.h"
 #include "Buffer.h"
 
 #include <iostream>
@@ -34,14 +34,13 @@ namespace Renderer
 	void LineMode(bool drawInLineMode);
 
 	/// <summary>
-	/// Binds the VAO, VBO, IBO, uses shaderprogram and finally renders the vertices as triangles
+	/// Binds the VA, IBO, uses shaderprogram and finally renders the vertices as triangles
 	/// </summary>
-	/// <param name="VAO">: Vertex Array Object</param>
-	/// <param name="VBO">: Vertex Buffer Object</param>
+	/// <param name="VA">: Vertex Array Object</param>
 	/// <param name="IBO">: Elemnt/Index Buffer Object</param>
 	/// <param name="shader">: Shader Object</param>
 	/// <param name="window">: Window object to render to</param>
-	void Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shader& shader, Window* window);
+	void Draw(VertexArray& VA, IndexBuffer& IBO, Shader& shader, Window* window);
 
 
 	void Exit();

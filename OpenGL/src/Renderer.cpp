@@ -74,17 +74,18 @@ void Renderer::LineMode(bool drawInLineMode)
 	else return;
 }
 
-void Renderer::Draw(VertexArrayObject& VAO, VertexBuffer& VBO, IndexBuffer& IBO, Shader& shader, Window* window)
+void Renderer::Draw(VertexArray& VA, IndexBuffer& IBO, Shader& shader, Window* window)
 {
 	/* Color of background of window */
-	GLCall(glClearColor(0.07f, 0.13f, 0.17f, 1.0f));
+	GLCall(glClearColor(0.6f, 0.693f, 0.69f, 1.0f));
 
 	/* Clean and assign new color to back buffer*/
 	GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
 
 	shader.UseShaderProgram();
-	VAO.Bind();
+	VA.Bind();
+	IBO.Bind();
 
 //TODO: CONFIGURE DEEZ
 	///
