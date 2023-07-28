@@ -52,7 +52,7 @@ int main()
 
 		Renderer::LineMode(false);
 
-		shader.UseShaderProgram();
+		shader.Bind();
 		// Render Loop
 		// -------------------
 		while (!Renderer::EndRenderLoop(window))

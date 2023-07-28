@@ -83,7 +83,7 @@ void Renderer::Draw(VertexArray& VA, IndexBuffer& IBO, Shader& shader, Window* w
 	GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
 
-	shader.UseShaderProgram();
+	shader.Bind();
 	VA.Bind();
 	IBO.Bind();
 

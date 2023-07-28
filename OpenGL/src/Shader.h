@@ -30,7 +30,8 @@ public:
 	Shader(const char* shaderPath);
 	uint32_t GetProgramID();
 
-	void UseShaderProgram();
+	void Bind() const;
+	void UnBind() const;
 
 	// Set uniform data for 4 floats
 	void SetUniform4F(const std::string& name, float v0, float v1, float v2, float v3);

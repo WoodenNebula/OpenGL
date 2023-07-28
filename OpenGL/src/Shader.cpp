@@ -13,9 +13,14 @@ Shader::Shader(const char* shaderPath)
 	m_ProgramID = CreateShaderProgram(source.VertexSrc, source.FragmentSrc);
 }
 
-void Shader::UseShaderProgram()
+void Shader::Bind() const
 {
 	GLCall(glUseProgram(m_ProgramID));
+}
+
+void Shader::UnBind() const
+{
+	GLCall(glUseProgram(0));
 }
 
 uint32_t Shader::GetProgramID()
