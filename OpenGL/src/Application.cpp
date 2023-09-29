@@ -10,14 +10,12 @@
 int main()
 {
 	Renderer renderer;
-	renderer.Init(3, 3);
+	renderer.Init(4, 3);
 	uint32_t width = 800, height = 600;
 	renderer.CreateWindow(width, height, "Window");
 
 
 	renderer.SetViewPort(800, 600);
-	// Texture - Black [0.0f, 0.5f)
-	// Texture - White [0.5f, 0.5f]
 
 	float vertices[] = {
 		// positions          // colors           // texture coords
