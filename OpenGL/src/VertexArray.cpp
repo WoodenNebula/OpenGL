@@ -37,10 +37,10 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 
 void VertexArray::Bind() const
 {
-	(glBindVertexArray(m_VAO_ID));
+	glBindVertexArray(m_VAO_ID);
 }
 
 void VertexArray::UnBind() const
 {
-	(glBindVertexArray(0));
+	glBindVertexArray(0);
 }

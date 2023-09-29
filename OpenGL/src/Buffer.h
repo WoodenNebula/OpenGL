@@ -15,8 +15,6 @@ public:
 
 	/// <summary>
 	/// Copies the provided array of vertices to the Buffer
-	/// Also it automatically binds the VBO associated with it before copying the data 
-	/// 
 	/// </summary>
 	/// <param name="data">pointer to the array of vertices</param>
 	/// <param name="size">size of the array data (size)</param>

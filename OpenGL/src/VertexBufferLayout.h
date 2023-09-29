@@ -30,11 +30,12 @@ private:
 	std::vector<VertexBufferElement> m_Elements;
 	uint32_t m_Stride;
 public:
-	VertexBufferLayout() {};
+	VertexBufferLayout()
+		:m_Stride(0) {};
 	~VertexBufferLayout() {};
 
-	/// <typeparam name="T">type of vertices data</typeparam>
-	/// <param name="count">number of elements per vertices</param>
+	/// <typeparam name="T">:type of vertices data</typeparam>
+	/// <param name="count">:number of elements per vertex attrib. For more than one attrib, this function has to be called each time with the count of elements in each attrib separately</param>
 	template<typename T>
 	void Push(uint32_t count)
 	{

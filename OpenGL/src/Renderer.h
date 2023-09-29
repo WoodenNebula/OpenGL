@@ -41,7 +41,6 @@ public:
 	/// <param name="VA">: Vertex Array Object</param>
 	/// <param name="IBO">: Elemnt/Index Buffer Object</param>
 	/// <param name="shader">: Shader Object</param>
-	/// <param name="window">: Window object to render to</param>
 	void Draw(const VertexArray& VA, const IndexBuffer& IBO, const Shader& shader);
 
 

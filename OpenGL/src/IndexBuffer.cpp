@@ -29,7 +29,6 @@ inline void IndexBuffer::SetData(const uint32_t* data, const uint32_t size)
 {
 	this->Bind();
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-	//this->UnBind();
 }
 
 uint32_t IndexBuffer::GetCount() const { return m_count; }

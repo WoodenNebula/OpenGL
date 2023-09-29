@@ -22,6 +22,22 @@ void initGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_Minor)
 	return;
 }
 
+//struct Coord2D
+//{
+//	float x;
+//	float y;
+//};
+//
+//class Quad
+//{
+//public:
+//	Coord2D center;
+//	float vertices[];
+//
+//
+//};
+
+
 
 int main()
 {
@@ -34,16 +50,14 @@ int main()
 	renderer.SetViewPort(800, 600);
 
 	float vertices[] = {
-		// positions          // colors           // texture coords
-		-0.5f,  0.5f, 0.0f,		// top left 
-		 0.5f,  0.5f, 0.0f,		// top right
-		 0.5f, -0.5f, 0.0f,		// bottom right
-		-0.5f, -0.5f, 0.0f		// bottom left
+		// positions        
+		 0.0f,  1.0f,	// 0 top mid
+		-0.5f,  0.0f,	// 1 mid left
+		 0.5f,  0.0f	// 2 mid right
 	};
 
 	uint32_t indices[] = {
-		0, 1, 2,
-		2, 3, 0
+		0, 1, 2
 	};
 
 	{
@@ -60,11 +74,8 @@ int main()
 		IndexBuffer IBO(indices, sizeof(indices));
 		VertexBufferLayout layout;
 
-		layout.Push<float>(3);
+		layout.Push<float>(2);	//pos
 		VA.AddBuffer(VBO, layout);
-
-
-		renderer.LineMode(false);
 
 		shader.Bind();
 		// Render Loop
@@ -72,13 +83,11 @@ int main()
 		while (!renderer.EndRenderLoop())
 		{
 			float time = glfwGetTime();
-			/* Render here */
-			float red = (sin(time) + 1 )/ 2;
 
-			shader.SetUniform4F("iColor", red, sin(red), cos(red), 1.0f);
+			shader.SetUniform4F("offset", sin(time)/2 , cos(time), 0.0f, 1.0f);
 
-			renderer.ProcessInput();
 			renderer.Draw(VA, IBO, shader);
+			renderer.ProcessInput();
 		}
 
 

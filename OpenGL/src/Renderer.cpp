@@ -47,6 +47,13 @@ void Renderer::ProcessInput()
 	if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(m_window, true);
+		std::cout << "ESC pressed, exiting application" << std::endl;
+	}
+	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	{
+		double xpos = NULL, ypos = NULL;
+		glfwGetCursorPos(m_window, &xpos, &ypos);
+		std::cout << "Mouse Clicked at: (x,y) = (" << xpos << ", " << ypos << ")" << std::endl;
 	}
 }
 
@@ -55,7 +62,7 @@ bool Renderer::EndRenderLoop()
 	return glfwWindowShouldClose(m_window);
 }
 
-void Renderer::LineMode(bool drawInLineMode)
+void Renderer::LineMode(bool drawInLineMode = false)
 {
 	if (drawInLineMode)
 	{
