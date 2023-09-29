@@ -41,7 +41,6 @@
     <None Include="cpp.hint" />
     <None Include="build\OpenGL.exe" />
     <None Include="build\OpenGL.pdb" />
-    <None Include="res\shader\shader.shader" />
     <None Include="res\GLFW_ICON" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\VertexBufferLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Callbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

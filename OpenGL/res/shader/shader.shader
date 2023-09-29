@@ -1,5 +1,5 @@
 #shader vertex
-#version 330 core
+#version 430 core
 layout(location = 0) in vec4 vertices;
 
 void main()
@@ -8,7 +8,7 @@ void main()
 }
 
 #shader fragment
-#version 330 core
+#version 430 core
 out vec4 FragColor;
 
 uniform vec4 iColor;

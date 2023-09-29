@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "Callbacks.h"
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Shader.h"
@@ -20,8 +21,6 @@ class Renderer
 private:
 	Window* m_window;
 public:
-	// Initializes GLFW and sets opengl version and core profile
-	void Init(int openGL_Version_Major, int openGL_Version_Minor);
 
 	Window* GetWindow() const;
 
@@ -61,15 +60,11 @@ private:
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "[Error] : GLEW initialization failed!" << std::endl;
-			abort();
+			return;
 		}
 	}
 
-	// Callback function for resizing windows
-	static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-	{
-		glViewport(0, 0, width, height);
-	}
+	
 };
 
 #endif // !RENDERER

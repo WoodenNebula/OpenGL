@@ -1,20 +1,36 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "Callbacks.h"
 #include "Renderer.h"
 
+void initGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_Minor)
+{
+	glfwSetErrorCallback(glfw_error_callback);
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+	if (!glfwInit())
+	{
+		/* Explicitly set the opengl version 3.3 (what we are using) */
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, openGL_Version_Major);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, openGL_Version_Minor);
+
+		/* Explicitly set the opengl profile to core (what we are using) */
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_DEBUG_CONTEXT);
+		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	}
+
+	return;
+}
+
 
 int main()
 {
+	initGLFW(4, 3);
+
 	Renderer renderer;
-	renderer.Init(4, 3);
+	
 	uint32_t width = 800, height = 600;
 	renderer.CreateWindow(width, height, "Window");
-
-
 	renderer.SetViewPort(800, 600);
 
 	float vertices[] = {
