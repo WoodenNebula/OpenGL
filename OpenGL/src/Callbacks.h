@@ -63,3 +63,49 @@ static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
+
+// Callback for SINGLE keypress event
+static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    {
+        glfwSetWindowShouldClose(window, true);
+        std::cout << "ESC pressed, exiting application" << std::endl;
+    }
+
+    if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+    {
+        std::cout << "LEFT ARROW KEY pressed" << std::endl;
+    }
+
+
+    if (key == GLFW_KEY_F11 && action == GLFW_PRESS)
+    {
+        static bool isFullScrreen = false;
+        GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+
+        static int lastWidth = 0, lastHeight = 0;
+        static int lastX = 0, lastY = 0;
+
+
+        if (!isFullScrreen)
+        {
+            //Saving windowed dimensions for later
+            glfwGetWindowSize(window, &lastWidth, &lastHeight);
+            glfwGetWindowPos(window, &lastX, &lastY);
+
+            glfwSetWindowMonitor(window, primaryMonitor, NULL, NULL, 1366, 768, 60);
+            std::cout << "F11 PRESSED! CHANGED INTO FULLSCREEN." << std::endl;
+            isFullScrreen = true;
+        }
+        else if (isFullScrreen)
+        {
+
+            glfwSetWindowMonitor(window, nullptr, lastX, lastY, lastWidth, lastHeight, 60);
+            std::cout << "F11 PRESSED! CHANGED INTO WINDOWED." << std::endl;
+            isFullScrreen = false;
+        }
+
+    }
+}

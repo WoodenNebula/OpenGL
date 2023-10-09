@@ -6,6 +6,29 @@
 #include <sstream>
 #include <string>
 
+Renderer::Renderer() :m_window(nullptr) {}
+
+
+Renderer::~Renderer() {}
+
+
+void Renderer::InitGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_Minor) const
+{
+	glfwSetErrorCallback(glfw_error_callback);
+
+	if (!glfwInit())
+	{
+		/* Explicitly set the opengl version 3.3 (what we are using) */
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, openGL_Version_Major);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, openGL_Version_Minor);
+
+		/* Explicitly set the opengl profile to core (what we are using) */
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_DEBUG_CONTEXT);
+		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	}
+}
+
+
  Window* Renderer::GetWindow() const 
 {
 	ASSERT(m_window != nullptr);
@@ -13,9 +36,9 @@
 };
 
 
- void Renderer::CreateWindow(int width, int height, const char* windowName)
+ void Renderer::CreateWindow(WindowHint winHint)
 {
-	m_window = glfwCreateWindow(width, height, windowName, NULL, NULL);
+	m_window = glfwCreateWindow(winHint.width, winHint.height, winHint.title.c_str(), NULL, NULL);
 	if (m_window == nullptr)
 	{
 		std::cout << "[Error] : line " << __LINE__ << " -> " << "\n\tWindow Creation Failed" << std::endl;
@@ -26,6 +49,8 @@
 		glfwMakeContextCurrent(m_window);
 
 		glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
+
+		glfwSetKeyCallback(m_window, glfw_key_callback);
 
 		InitGlew();
 
@@ -42,13 +67,9 @@ void Renderer::SetViewPort(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+
 void Renderer::ProcessInput()
 {
-	if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-	{
-		glfwSetWindowShouldClose(m_window, true);
-		std::cout << "ESC pressed, exiting application" << std::endl;
-	}
 	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 	{
 		double xpos = NULL, ypos = NULL;
@@ -57,10 +78,12 @@ void Renderer::ProcessInput()
 	}
 }
 
+
 bool Renderer::EndRenderLoop()
 {
 	return glfwWindowShouldClose(m_window);
 }
+
 
 void Renderer::LineMode(bool drawInLineMode = false)
 {
@@ -68,29 +91,32 @@ void Renderer::LineMode(bool drawInLineMode = false)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
-	else return;
+	else
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
 }
+
 
 void Renderer::Draw(const VertexArray& VA, const IndexBuffer& IBO, const Shader& shader)
 {
 	/* Color of background of window */
-	glClearColor(0.6f, 0.693f, 0.69f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	/* Clean and assign new color to back buffer*/
-	glClear(GL_COLOR_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT);
 
 
 	shader.Bind();
 	VA.Bind();
 	IBO.Bind();
 
-//TODO: CONFIGURE DEEZ
 	///
 	/// Primitive(shape) we want to use
 	/// How many indices we want to draw
 	/// Data type of indices
 	/// Index of indices 
-	/// 
+	///
 	glDrawElements(GL_TRIANGLES, IBO.GetCount(), GL_UNSIGNED_INT, 0);
 
 	/* Swap front and back buffers */
@@ -99,6 +125,7 @@ void Renderer::Draw(const VertexArray& VA, const IndexBuffer& IBO, const Shader&
 	/* Poll for events and processes */
 	glfwPollEvents();
 }
+
 
 void Renderer::Exit()
 {

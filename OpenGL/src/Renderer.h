@@ -16,11 +16,26 @@
 
 #define Window GLFWwindow
 
+struct WindowHint
+{
+	uint32_t width;
+	uint32_t height;
+	std::string title;
+
+	uint32_t viewWidth;
+	uint32_t viewHeight;
+
+};
+
 class Renderer
 {
 private:
 	Window* m_window;
 public:
+	Renderer();
+	~Renderer();
+
+	void InitGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_Minor) const;
 
 	Window* GetWindow() const;
 
@@ -48,7 +63,7 @@ public:
 
 public:
 	// Creates a resizeable window on the Window* provided after making it the current context and initializing glew as well
-	void CreateWindow(int width, int height, const char* windowName);
+	void CreateWindow(WindowHint winHint);
 
 
 private:
