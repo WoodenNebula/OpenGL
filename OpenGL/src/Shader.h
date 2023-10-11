@@ -24,7 +24,7 @@ class Shader
 private:
 	uint32_t m_ProgramID;
 	const std::string m_FilePath;
-	std::unordered_map<std::string, uint32_t> m_UniformLocationCache;
+	std::unordered_map<std::string, int> m_UniformLocationCache;
 
 public:
 	Shader(const char* shaderPath);
@@ -33,8 +33,15 @@ public:
 	void Bind() const;
 	void UnBind() const;
 
+
+	void SetUniform1i(const std::string& name, int v0);
+
+
+	void SetUniform1f(const std::string& name, float value);
+
+
 	// Set uniform data for 4 floats
-	void SetUniform4F(const std::string& name, float v0, float v1, float v2, float v3);
+	void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
 
 	uint32_t GetUniformLocation(const std::string& name);
 private:

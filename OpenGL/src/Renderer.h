@@ -50,6 +50,8 @@ public:
 	// Hint OpenGl to draw only the borders
 	void LineMode(bool drawInLineMode);
 
+	void ClearScreen();
+
 	/// <summary>
 	/// Binds the VA, IBO, uses shaderprogram and finally renders the vertices as triangles
 	/// </summary>

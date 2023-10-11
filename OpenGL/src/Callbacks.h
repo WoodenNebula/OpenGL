@@ -64,6 +64,8 @@ static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
+
+
 // Callback for SINGLE keypress event
 static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -74,9 +76,16 @@ static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int act
         std::cout << "ESC pressed, exiting application" << std::endl;
     }
 
-    if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
     {
-        std::cout << "LEFT ARROW KEY pressed" << std::endl;
+        extern bool startRendering;
+        startRendering = !startRendering;
+
+        if(startRendering)
+            std::cout << "SPACE pressed: STARTING RENDERING" << std::endl;
+        else if(!startRendering)
+            std::cout << "SPACE pressed: PAUSING RENDERING" << std::endl;
+
     }
 
 

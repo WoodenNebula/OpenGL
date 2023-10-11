@@ -8,7 +8,7 @@ out vec4 vColor;
 void main()
 {
     gl_Position = positions;
-    vColor = vec4(1.0f);
+    vColor = vec4(0.0f);
 }
 
 #shader fragment
