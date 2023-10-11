@@ -5,8 +5,12 @@
 #include "Renderer.h"
 #include "Texture.h"
 
-bool startRendering = false;
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
+
+bool startRendering = false;
+bool rickAstley = false;
 
 struct Coord2D
 {
@@ -105,9 +109,6 @@ int main()
 		 then EBO/IBO bind and set data
 		 then configure vertex attributes*/
 
-		Shader defaultShader("./res/shader/default.shader");
-		Shader shader("./res/shader/shader.shader");
-
 		VertexArray VA;
 		VertexBuffer VBO(vertices, sizeof(vertices));
 		IndexBuffer IBO(indices, sizeof(indices));
@@ -117,10 +118,17 @@ int main()
 		layout1.Push<float>(2);	//tex
 		VA.AddBuffer(VBO, layout1);
 		
+		// making a 4:3 aspect ratio -> (-2 to 2 is 4 units distance and -1.5 to 1.5 is 3)
+		glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f);
+
+		Shader defaultShader("./res/shader/default.shader");
+		Shader shader("./res/shader/shader.shader");
 		shader.Bind();
+		shader.SetUniformMat4f("u_MVP", proj);
 
 		Texture happyFace("./res/textures/awesomeface.png");
-		happyFace.Bind();
+		Texture rick("./res/textures/NGGYU.png");
+
 		//0 is the slot that the texture is bound to
 		shader.SetUniform1i("u_Texture", 0);
 
@@ -133,6 +141,10 @@ int main()
 			{
 				float time = glfwGetTime();
 				{
+					if (rickAstley)
+						rick.Bind();
+					else
+						happyFace.Bind();
 					renderer.ClearScreen();
 					shader.Bind();
 					//shader.SetUniform4f("offset", sin(time) / 2, cos(time), 0.0f, 1.0f);
@@ -141,10 +153,12 @@ int main()
 					renderer.Draw(VA, IBO, shader);
 				}
 			}
-			else {
+			else 
+			{
 				{
 					renderer.ClearScreen();
 					renderer.Draw(VA, IBO, defaultShader);
+					rickAstley = false;
 				}
 			}
 

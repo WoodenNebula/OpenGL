@@ -88,6 +88,18 @@ static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int act
 
     }
 
+    if (key == GLFW_KEY_R && action == GLFW_PRESS)
+    {
+        extern bool rickAstley;
+        rickAstley = true;
+    }
+
+    if (key == GLFW_KEY_F && action == GLFW_PRESS)
+    {
+        extern bool rickAstley;
+        rickAstley = false;
+    }
+
 
     if (key == GLFW_KEY_F11 && action == GLFW_PRESS)
     {
