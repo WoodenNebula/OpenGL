@@ -52,6 +52,8 @@ public:
 
 	void ClearScreen();
 
+	void SetBackGroundColor(const glm::vec3& Color);
+
 	/// <summary>
 	/// Binds the VA, IBO, uses shaderprogram and finally renders the vertices as triangles
 	/// </summary>

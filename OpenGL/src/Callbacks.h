@@ -91,13 +91,23 @@ static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int act
     if (key == GLFW_KEY_R && action == GLFW_PRESS)
     {
         extern bool rickAstley;
-        rickAstley = true;
+        if (!rickAstley)
+        {
+            rickAstley = true;
+            std::cout << "Render Next: Rick" << std::endl;
+        }
+        else std::cout << "RICK ALREADY ROLLED" << std::endl;
     }
 
     if (key == GLFW_KEY_F && action == GLFW_PRESS)
     {
         extern bool rickAstley;
-        rickAstley = false;
+        if (rickAstley)
+        {
+            rickAstley = false;
+            std::cout << "Render Next: NOT Rick" << std::endl;
+        }
+        else std::cout << "RICK ALREADY GAVE YOU UP" << std::endl;
     }
 
 

@@ -104,11 +104,16 @@ void Renderer::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void Renderer::SetBackGroundColor(const glm::vec3& Color)
+{
+	glClearColor(Color.r, Color.g, Color.b, 1.0f);
+}
+
 
 void Renderer::Draw(const VertexArray& VA, const IndexBuffer& IBO, const Shader& shader)
 {
 	/* Color of background of window */
-	glClearColor(0.78f, 0.89f, 0.53f, 1.0f);
+	glClearColor(0.2f, 0.39f, 0.32f, 1.0f);
 
 	shader.Bind();
 	VA.Bind();
