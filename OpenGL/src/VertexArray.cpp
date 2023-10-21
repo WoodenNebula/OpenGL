@@ -1,10 +1,10 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
-
-#include "ErrorHandler.h"
-
+#include "Buffer.h"
+#include "Assert.h"
 
 VertexArray::VertexArray()
+	:m_VAO_ID(NULL)
 {
 	glGenVertexArrays(1, &m_VAO_ID);
 	glBindVertexArray(m_VAO_ID);

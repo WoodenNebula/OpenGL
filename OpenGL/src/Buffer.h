@@ -1,14 +1,15 @@
 #pragma once
 
-#include "ErrorHandler.h"
+#include "Assert.h"
+#include <iostream>
 
 class VertexBuffer
 {
 public:
-	VertexBuffer(const void* data, uint32_t size);
+	VertexBuffer(const void* data, unsigned int size);
 	~VertexBuffer();
 
-	uint32_t GetObjectID() const;
+	unsigned int GetObjectID() const;
 
 	void Bind() const;
 	void UnBind() const;
@@ -18,16 +19,16 @@ public:
 	/// </summary>
 	/// <param name="data">pointer to the array of vertices</param>
 	/// <param name="size">size of the array data (size)</param>
-	void SetData(const void* data, const uint32_t size);
+	void SetData(const void* data, const unsigned int size);
 private:
-	uint32_t m_RendererID;
+	unsigned int m_RendererID;
 };
 
 
 class IndexBuffer
 {
 public:
-	IndexBuffer(const uint32_t* data, uint32_t size);
+	IndexBuffer(const unsigned int* data, unsigned int size);
 	~IndexBuffer();
 
 	void Bind() const;
@@ -40,12 +41,12 @@ public:
 	/// </summary>
 	/// <param name="data">pointer to the array of indices</param>
 	/// <param name="size">size of the element buffer array</param>
-	void SetData(const uint32_t* data, const uint32_t size);
+	void SetData(const unsigned int* data, const unsigned int size);
 
-	uint32_t GetCount() const;
+	unsigned int GetCount() const;
 
-	uint32_t GetObjectID() const;
+	unsigned int GetObjectID() const;
 
 private:
-	uint32_t m_RendererID, m_count;
+	unsigned int m_RendererID, m_count;
 };

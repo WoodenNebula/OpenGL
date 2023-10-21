@@ -30,9 +30,6 @@
     <ClCompile Include="src\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ErrorHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,6 +40,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\vendor\GLM\detail\glm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quad2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -494,7 +494,7 @@
     <ClInclude Include="src\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ErrorHandler.h">
+    <ClInclude Include="src\Assert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Buffer.h">
@@ -1376,20 +1376,12 @@
     <ClInclude Include="src\vendor\GLM\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quad2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glew32s.lib" />
     <Library Include="dependencies\lib\glfw3.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\textures\blackTile.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\textures\greyTile.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\textures\awesomeface.png">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

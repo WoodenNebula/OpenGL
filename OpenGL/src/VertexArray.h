@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Buffer.h"
-
-class  VertexBufferLayout;
+class VertexBufferLayout;
+class VertexBuffer;
 
 class VertexArray
 {
 private:
-	uint32_t m_VAO_ID;
+	unsigned int m_VAO_ID;
 
 public:
 	VertexArray();

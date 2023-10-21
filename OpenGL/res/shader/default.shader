@@ -1,7 +1,6 @@
 #shader vertex
 #version 430 core
-layout(location = 0) 
-in vec4 positions;
+layout(location = 0) in vec4 positions;
 
 out vec4 vColor;
 
@@ -15,8 +14,6 @@ void main()
 #version 430 core
 in vec4 vColor;
 out vec4 FragColor;
-
-//uniform vec4 iColor;
 
 void main()
 {

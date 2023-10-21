@@ -1,7 +1,9 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include "Quad2D.h"
 
 #include <iostream>
+
 
 static void glfw_error_callback(int errCode, const char* errMsg)
 {
@@ -65,17 +67,19 @@ static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 
 
-
 // Callback for SINGLE keypress event
 static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 
+    // Exit on ESC
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     {
         glfwSetWindowShouldClose(window, true);
         std::cout << "ESC pressed, exiting application" << std::endl;
     }
 
+
+    // Start Rendering on Space
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
     {
         extern bool startRendering;
@@ -85,8 +89,8 @@ static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int act
             std::cout << "SPACE pressed: STARTING RENDERING" << std::endl;
         else if(!startRendering)
             std::cout << "SPACE pressed: PAUSING RENDERING" << std::endl;
-
     }
+
 
     if (key == GLFW_KEY_R && action == GLFW_PRESS)
     {
@@ -98,6 +102,7 @@ static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int act
         }
         else std::cout << "RICK ALREADY ROLLED" << std::endl;
     }
+
 
     if (key == GLFW_KEY_F && action == GLFW_PRESS)
     {
@@ -111,6 +116,7 @@ static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int act
     }
 
 
+    // Fullscreen Windows
     if (key == GLFW_KEY_F11 && action == GLFW_PRESS)
     {
         static bool isFullScrreen = false;
@@ -136,6 +142,39 @@ static void glfw_key_callback(GLFWwindow* window, int key, int scancode, int act
             glfwSetWindowMonitor(window, nullptr, lastX, lastY, lastWidth, lastHeight, 60);
             std::cout << "F11 PRESSED! CHANGED INTO WINDOWED." << std::endl;
             isFullScrreen = false;
+        }
+
+    }
+}
+
+
+// Callback for mouse button event
+static void glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    // Mouse Click Collision Check
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        double cursorX = 0, cursorY = 0;
+        glfwGetCursorPos(window, &cursorX, &cursorY);
+
+        std::cout << "Mouse Clicked at: (x,y) = (" << cursorX << ", " << cursorY << ")" << std::endl;
+        bool buttonClicked = false;
+
+        extern std::vector<std::unique_ptr<Quad2D>> quadList;
+
+        bool click = false;
+        for (const auto& quad : quadList)
+        {
+            click = quad->ClickCollision(cursorX, cursorY);
+            if (click)
+            {
+                std::cout << "Collision Successful! BUTTON PRESSED" << std::endl;
+                // Handle Successful collision
+            }
+            else
+            {
+                // Handle Unsuccessful collision
+            }
         }
 
     }

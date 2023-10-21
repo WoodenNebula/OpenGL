@@ -172,8 +172,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\ErrorHandler.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
+    <ClCompile Include="src\Quad2D.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\vendor\GLM\detail\glm.cpp" />
@@ -336,7 +336,8 @@
     <ClInclude Include="dependencies\include\GL\wglew.h" />
     <ClInclude Include="src\Buffer.h" />
     <ClInclude Include="src\Callbacks.h" />
-    <ClInclude Include="src\ErrorHandler.h" />
+    <ClInclude Include="src\Assert.h" />
+    <ClInclude Include="src\Quad2D.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\vendor\GLM\common.hpp" />
@@ -634,11 +635,6 @@
   <ItemGroup>
     <Library Include="dependencies\lib\glew32s.lib" />
     <Library Include="dependencies\lib\glfw3.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\textures\awesomeface.png" />
-    <Image Include="res\textures\blackTile.png" />
-    <Image Include="res\textures\greyTile.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

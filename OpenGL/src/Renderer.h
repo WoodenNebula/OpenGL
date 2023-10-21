@@ -5,16 +5,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Callbacks.h"
 #include "VertexArray.h"
-#include "VertexBufferLayout.h"
 #include "Shader.h"
 #include "Buffer.h"
+#include "Assert.h"
 
-#include <iostream>
 #include <string>
 
-#define Window GLFWwindow
 
 struct WindowHint
 {
@@ -30,14 +27,14 @@ struct WindowHint
 class Renderer
 {
 private:
-	Window* m_window;
+	GLFWwindow* m_window;
 public:
 	Renderer();
 	~Renderer();
 
 	void InitGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_Minor) const;
 
-	Window* GetWindow() const;
+	GLFWwindow* GetWindow() const;
 
 	// Sets OpenGL view port while performing errorchecks
 	void SetViewPort(int width, int height);
@@ -68,21 +65,6 @@ public:
 public:
 	// Creates a resizeable window on the Window* provided after making it the current context and initializing glew as well
 	void CreateWindow(WindowHint winHint);
-
-
-private:
-	// Initialize GLEW after having a valid window context
-	void InitGlew()
-	{
-		/* Initializing GLEW library */
-		if (glewInit() != GLEW_OK)
-		{
-			std::cout << "[Error] : GLEW initialization failed!" << std::endl;
-			return;
-		}
-	}
-
-	
 };
 
 #endif // !RENDERER

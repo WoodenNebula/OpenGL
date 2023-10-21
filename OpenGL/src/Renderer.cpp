@@ -2,6 +2,8 @@
 
 #include "Renderer.h"
 
+#include "Callbacks.h"
+
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -12,7 +14,7 @@ Renderer::Renderer() :m_window(nullptr) {}
 Renderer::~Renderer() {}
 
 
-void Renderer::InitGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_Minor) const
+void Renderer::InitGLFW(unsigned int openGL_Version_Major, unsigned int openGL_Version_Minor) const
 {
 	glfwSetErrorCallback(glfw_error_callback);
 
@@ -29,7 +31,7 @@ void Renderer::InitGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_M
 }
 
 
- Window* Renderer::GetWindow() const 
+GLFWwindow* Renderer::GetWindow() const
 {
 	ASSERT(m_window != nullptr);
 	return m_window;
@@ -52,7 +54,14 @@ void Renderer::InitGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_M
 
 		glfwSetKeyCallback(m_window, glfw_key_callback);
 
-		InitGlew();
+		glfwSetMouseButtonCallback(m_window, glfw_mouse_button_callback);
+
+		/* Initializing GLEW library */
+		if (glewInit() != GLEW_OK)
+		{
+			std::cout << "[Error] : GLEW initialization failed!" << std::endl;
+			return;
+		}
 
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(opengl_error_callback, 0);
@@ -63,11 +72,12 @@ void Renderer::InitGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_M
 void Renderer::SetViewPort(int width, int height)
 {
 	/* Setting the size of the viewable area */
-	
 	glViewport(0, 0, width, height);
 }
 
-
+/// <summary>
+/// Handle inputs from each frame
+/// </summary>
 void Renderer::ProcessInput()
 {
 	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
@@ -126,12 +136,6 @@ void Renderer::Draw(const VertexArray& VA, const IndexBuffer& IBO, const Shader&
 	/// Index of indices 
 	///
 	glDrawElements(GL_TRIANGLES, IBO.GetCount(), GL_UNSIGNED_INT, 0);
-
-	/* Swap front and back buffers */
-	glfwSwapBuffers(m_window);
-
-	/* Poll for events and processes */
-	glfwPollEvents();
 }
 
 
@@ -139,4 +143,3 @@ void Renderer::Exit()
 {
 	glfwTerminate();
 }
-
