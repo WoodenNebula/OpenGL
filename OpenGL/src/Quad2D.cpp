@@ -7,7 +7,13 @@ Quad2D::Quad2D(const WindowHint& dimensions, const Coord2D& center, float width,
 		m_Center.x + m_width, m_Center.y + m_height,		1.0f, 1.0f,			// 1 Top Right
 		m_Center.x + m_width, m_Center.y - m_height,		1.0f, 0.0f,			// 2 Bottom Right
 		m_Center.x - m_width, m_Center.y - m_height,		0.0f, 0.0f			// 3 Bottom Left
-	},
+	}, 
+	m_initialPosition{
+	glm::vec3(m_vertices[0],  m_vertices[1], 0.0f),	// 0
+	glm::vec3(m_vertices[4],  m_vertices[5], 0.0f),	// 1
+	glm::vec3(m_vertices[8],  m_vertices[9], 0.0f),	// 2
+	glm::vec3(m_vertices[12], m_vertices[13], 0.0f) // 3
+	}, 
 	m_indices{
 			0, 1, 2,
 			2, 3, 0
@@ -50,9 +56,16 @@ void Quad2D::Draw() const
 
 }
 
+std::vector<glm::vec3> Quad2D::GetInitialPosition() const
+{
+	return m_initialPosition;
+}
 
 bool Quad2D::ClickCollision(float cursorX, float cursorY) const
 {
+	extern glm::mat3 mvp;
+
+
 	if ((cursorX >= m_Center.x - m_width && cursorX <= m_Center.x + m_width) &&
 		(cursorY >= m_Center.y - m_height && cursorY <= m_Center.y + m_height))
 	{

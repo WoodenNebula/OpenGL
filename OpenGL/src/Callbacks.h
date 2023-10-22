@@ -2,6 +2,9 @@
 #include <GLFW/glfw3.h>
 #include "Quad2D.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 #include <iostream>
 
 
@@ -64,6 +67,8 @@ static void GLAPIENTRY opengl_error_callback(GLenum source,
 static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+    extern glm::mat4 proj;
+    proj = glm::ortho(0.0f, (float)width, 0.0f, (float)height);
 }
 
 

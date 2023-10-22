@@ -1,12 +1,14 @@
 #pragma once
 
-#include <string>
-#include <memory>
-
 #include "Renderer.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 
+#include "glm/glm.hpp"
+
+#include <string>
+#include <memory>
+#include <vector>
 
 struct Coord2D
 {
@@ -22,6 +24,8 @@ private:
 
 	float m_vertices[16];
 	unsigned int m_indices[6];
+
+	std::vector<glm::vec3> m_initialPosition;
 
 	std::unique_ptr<Shader> m_QuadShader;
 	std::unique_ptr<VertexArray> m_VA;
@@ -48,6 +52,8 @@ public:
 	bool ClickCollision(float cursorX, float cursorY) const;
 
 	void BindShader() const;
+
+	std::vector<glm::vec3> GetInitialPosition() const;
 
 	// Uniform Setters
 	void SetUniform1f(const std::string& name, float value) const;

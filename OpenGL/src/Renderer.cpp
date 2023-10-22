@@ -8,7 +8,7 @@
 #include <sstream>
 #include <string>
 
-Renderer::Renderer() :m_window(nullptr) {}
+Renderer::Renderer() :m_window(nullptr), m_speed(0.75f) {}
 
 
 Renderer::~Renderer() {}
@@ -75,16 +75,51 @@ void Renderer::SetViewPort(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+void Renderer::SetSpeed(float speed)
+{
+	m_speed = speed;
+}
+
+
 /// <summary>
 /// Handle inputs from each frame
 /// </summary>
 void Renderer::ProcessInput()
 {
-	if (glfwGetMouseButton(m_window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	if (glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
 	{
-		double xpos = NULL, ypos = NULL;
-		glfwGetCursorPos(m_window, &xpos, &ypos);
-		std::cout << "Mouse Clicked at: (x,y) = (" << xpos << ", " << ypos << ")" << std::endl;
+		extern float xOffset;
+		int currWidth = 0, currHeight = 0;
+		glfwGetWindowSize(m_window, &currWidth, &currHeight);
+		//if(xOffset <= currWidth)
+		xOffset = xOffset - m_speed;
+	}
+
+	if (glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		extern float xOffset;
+		int currWidth = 0, currHeight = 0;
+		glfwGetWindowSize(m_window, &currWidth, &currHeight);
+
+		xOffset = xOffset + m_speed;
+	}
+
+	if (glfwGetKey(m_window, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		extern float yOffset;
+		int currWidth = 0, currHeight = 0;
+		glfwGetWindowSize(m_window, &currWidth, &currHeight);
+		//if (yOffset <= currHeight)
+		yOffset = yOffset + m_speed;
+	}
+
+	if (glfwGetKey(m_window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		extern float yOffset;
+		int currWidth = 0, currHeight = 0;
+		glfwGetWindowSize(m_window, &currWidth, &currHeight);
+		//if (yOffset <= currHeight)
+		yOffset = yOffset - m_speed;
 	}
 }
 

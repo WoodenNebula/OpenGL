@@ -18,6 +18,10 @@
 bool startRendering = false;
 bool rickAstley = false;
 std::vector<std::unique_ptr<Quad2D>> quadList;
+float xOffset = 0.0f, yOffset = 0.0f;
+glm::mat4 proj = glm::mat4(0.0f);
+glm::mat4 mvp = glm::mat4(0.0f);
+
 
 
 int main()
@@ -79,33 +83,23 @@ int main()
 		layout1.Push<float>(2);	//tex
 		VA.AddBuffer(VBO, layout1);
 		
-		glm::mat4 proj = glm::ortho(0.0f, (float)windowHint.width, 0.0f, (float)windowHint.width);
-		//camera
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));
-
-		glm::mat4 mvp = proj * view * model;
-
-		for (const auto& quad : quadList)
-		{
-			quad->BindShader();
-			quad->SetUniformMat4f("u_MVP", mvp);
-		}
-
 		
 		Shader defaultShader("./res/shader/default.shader");
 		Shader shader("./res/shader/shader.shader");
-		shader.Bind();
-		shader.SetUniformMat4f("u_MVP", mvp);
-
 
 		Texture happyFace("./res/textures/awesomeface.png");
 		Texture rick("./res/textures/NGGYU.png");
 
 
+		shader.Bind();
 		//0 is the slot that the texture is bound to
 		shader.SetUniform1i("u_Texture", 0);
 
+		proj = glm::ortho(0.0f, (float)windowHint.width, 0.0f, (float)windowHint.height);
+
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+
+		renderer.SetSpeed(1.0f);
 
 		// Render Loop
 		// -------------------
@@ -118,6 +112,12 @@ int main()
 				else
 					happyFace.Bind();
 
+				glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(xOffset, yOffset, 0.0f));
+
+				glm::mat4 mvp = proj * view * model;
+
+				shader.Bind();
+				shader.SetUniformMat4f("u_MVP", mvp);
 				renderer.ClearScreen();
 				renderer.Draw(VA, IBO, shader);
 
@@ -125,8 +125,14 @@ int main()
 			else
 			{
 				renderer.ClearScreen();
+				glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(xOffset, yOffset, 0.0f));
+
+				mvp = proj * view * model;
+
 				for (const auto& quad : quadList)
 				{
+					quad->BindShader();
+					quad->SetUniformMat4f("u_MVP", mvp);
 					quad->Draw();
 				}
 				
@@ -141,7 +147,7 @@ int main()
 			/* Poll for events and processes */
 			glfwPollEvents();
 
-			//renderer.ProcessInput();
+			renderer.ProcessInput();
 		}
 	}
 	renderer.Exit();

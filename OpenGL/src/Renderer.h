@@ -28,6 +28,7 @@ class Renderer
 {
 private:
 	GLFWwindow* m_window;
+	float m_speed;
 public:
 	Renderer();
 	~Renderer();
@@ -38,6 +39,8 @@ public:
 
 	// Sets OpenGL view port while performing errorchecks
 	void SetViewPort(int width, int height);
+
+	void SetSpeed(float speed);
 
 	void ProcessInput();
 
