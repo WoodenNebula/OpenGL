@@ -1,8 +1,6 @@
 #pragma once
 #include "stdpch.h"
 
-#include "Renderer.h"
-
 class Texture
 {
 private:

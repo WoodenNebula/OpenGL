@@ -3,7 +3,6 @@
 
 #include <GL\glew.h>
 
-
 struct VertexBufferElement
 {
 	uint32_t type;

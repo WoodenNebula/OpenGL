@@ -1,8 +1,10 @@
 #include "stdpch.h"
 
 #include "Texture.h"
+#include <GL\glew.h>
 
-#include "stb_image/stb_image.h"
+#include "stb_image\stb_image.h"
+
 
 Texture::Texture(const std::string& path)
 	:m_Renderer_ID(0), m_FilePath(path), m_LocalBufer(nullptr), m_Width(0), m_Height(0), m_BPP(0)
