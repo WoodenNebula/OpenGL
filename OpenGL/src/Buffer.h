@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Assert.h"
-#include <iostream>
+#include "stdpch.h"
 
 class VertexBuffer
 {

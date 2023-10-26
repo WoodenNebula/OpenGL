@@ -1,12 +1,7 @@
-#pragma once
+#include "stdpch.h"
 
 #include "Renderer.h"
-
 #include "Callbacks.h"
-
-#include <iostream>
-#include <sstream>
-#include <string>
 
 Renderer::Renderer() :m_window(nullptr), m_speed(0.75f) {}
 

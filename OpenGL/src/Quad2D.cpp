@@ -1,3 +1,5 @@
+#include "stdpch.h"
+
 #include "Quad2D.h"
 
 Quad2D::Quad2D(const WindowHint& dimensions, const Coord2D& center, float width, float height, const std::string& texturePath)

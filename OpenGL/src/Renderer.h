@@ -1,6 +1,5 @@
 #pragma once
-#ifndef RENDERER
-#define RENDERER
+#include "stdpch.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -9,9 +8,6 @@
 #include "Shader.h"
 #include "Buffer.h"
 #include "Assert.h"
-
-#include <string>
-
 
 struct WindowHint
 {
@@ -69,5 +65,3 @@ public:
 	// Creates a resizeable window on the Window* provided after making it the current context and initializing glew as well
 	void CreateWindow(WindowHint winHint);
 };
-
-#endif // !RENDERER

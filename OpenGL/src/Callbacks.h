@@ -1,11 +1,11 @@
 #pragma once
+#include "stdpch.h"
+
 #include <GLFW/glfw3.h>
 #include "Quad2D.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-
-#include <iostream>
 
 
 static void glfw_error_callback(int errCode, const char* errMsg)

@@ -1,7 +1,8 @@
+#include "stdpch.h"
+
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Buffer.h"
-#include "Assert.h"
 
 VertexArray::VertexArray()
 	:m_VAO_ID(NULL)

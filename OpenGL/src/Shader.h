@@ -1,12 +1,7 @@
 #pragma once
-#ifndef SHADER
-#define SHADER
 
-#include "Assert.h"
+#include "stdpch.h"
 #include "glm/glm.hpp"
-
-#include <string>
-#include <unordered_map>
 
 
 enum class ShaderType
@@ -46,5 +41,3 @@ private:
 	uint32_t CreateShaderProgram(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc);
 	uint32_t CompileShader(ShaderType type, const std::string& shaderSrc);
 };
-
-#endif // !SHADER

@@ -1,14 +1,13 @@
 #pragma once
 
+#include "stdpch.h"
+
 #include "Renderer.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 
 #include "glm/glm.hpp"
 
-#include <string>
-#include <memory>
-#include <vector>
 
 struct Coord2D
 {

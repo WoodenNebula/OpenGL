@@ -1,12 +1,8 @@
-#pragma once
-
+#include "stdpch.h"
 #include "Shader.h"
 
 #include <GL/glew.h>
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 Shader::Shader(const char* shaderPath)
 	:m_FilePath(shaderPath), m_ProgramID(0)

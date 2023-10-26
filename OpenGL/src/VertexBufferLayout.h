@@ -1,10 +1,7 @@
 #pragma once
+#include "stdpch.h"
 
 #include <GL\glew.h>
-#include "Assert.h"
-
-#include <vector>
-
 
 
 struct VertexBufferElement
