@@ -11,6 +11,8 @@
 
 // Data Structures
 #include <string>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include <set>
 #include <map>
