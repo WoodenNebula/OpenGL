@@ -1,40 +1,20 @@
 #pragma once
 #include "stdpch.h"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include "VertexArray.h"
 #include "Shader.h"
 #include "Buffer.h"
-#include "Assert.h"
-
-struct WindowHint
-{
-	uint32_t width;
-	uint32_t height;
-	std::string title;
-
-	uint32_t viewWidth;
-	uint32_t viewHeight;
-
-};
+#include <GLFW\glfw3.h>
 
 class Renderer
 {
 private:
-	GLFWwindow* m_window;
 	float m_speed;
+	GLFWwindow* m_window;
 public:
-	Renderer();
+	Renderer(GLFWwindow* Window);
 	~Renderer();
 
-	void InitGLFW(uint32_t openGL_Version_Major, uint32_t openGL_Version_Minor) const;
-
-	GLFWwindow* GetWindow() const;
-
-	// Sets OpenGL view port while performing errorchecks
-	void SetViewPort(int width, int height);
 
 	void SetSpeed(float speed);
 
@@ -45,6 +25,7 @@ public:
 
 	// Hint OpenGl to draw only the borders
 	void LineMode(bool drawInLineMode);
+
 
 	void ClearScreen();
 
@@ -61,7 +42,4 @@ public:
 
 	void Exit();
 
-public:
-	// Creates a resizeable window on the Window* provided after making it the current context and initializing glew as well
-	void CreateWindow(WindowHint winHint);
 };

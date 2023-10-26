@@ -1,79 +1,20 @@
 #include "stdpch.h"
 
 #include "Renderer.h"
-#include "Callbacks.h"
 
-Renderer::Renderer() :m_window(nullptr), m_speed(0.75f) {}
+
+Renderer::Renderer(GLFWwindow* Window) :m_window(Window), m_speed(0.75f) {}
 
 
 Renderer::~Renderer() {}
 
 
-void Renderer::InitGLFW(unsigned int openGL_Version_Major, unsigned int openGL_Version_Minor) const
-{
-	glfwSetErrorCallback(glfw_error_callback);
-
-	if (!glfwInit())
-	{
-		/* Explicitly set the opengl version 3.3 (what we are using) */
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, openGL_Version_Major);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, openGL_Version_Minor);
-
-		/* Explicitly set the opengl profile to core (what we are using) */
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_DEBUG_CONTEXT);
-		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	}
-}
-
-
-GLFWwindow* Renderer::GetWindow() const
-{
-	ASSERT(m_window != nullptr);
-	return m_window;
-};
-
-
- void Renderer::CreateWindow(WindowHint winHint)
-{
-	m_window = glfwCreateWindow(winHint.width, winHint.height, winHint.title.c_str(), NULL, NULL);
-	if (m_window == nullptr)
-	{
-		std::cout << "[Error] : line " << __LINE__ << " -> " << "\n\tWindow Creation Failed" << std::endl;
-		glfwTerminate();
-	}
-	else
-	{
-		glfwMakeContextCurrent(m_window);
-
-		glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
-
-		glfwSetKeyCallback(m_window, glfw_key_callback);
-
-		glfwSetMouseButtonCallback(m_window, glfw_mouse_button_callback);
-
-		/* Initializing GLEW library */
-		if (glewInit() != GLEW_OK)
-		{
-			std::cout << "[Error] : GLEW initialization failed!" << std::endl;
-			return;
-		}
-
-		glEnable(GL_DEBUG_OUTPUT);
-		glDebugMessageCallback(opengl_error_callback, 0);
-	}
-}
-
-
-void Renderer::SetViewPort(int width, int height)
-{
-	/* Setting the size of the viewable area */
-	glViewport(0, 0, width, height);
-}
 
 void Renderer::SetSpeed(float speed)
 {
 	m_speed = speed;
 }
+
 
 
 /// <summary>
