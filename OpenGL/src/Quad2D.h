@@ -2,18 +2,31 @@
 
 #include "stdpch.h"
 
-#include "Renderer.h"
-#include "VertexBufferLayout.h"
-#include "Texture.h"
-
 #include "glm/glm.hpp"
-
 
 struct Coord2D
 {
 	float x;
 	float y;
 };
+
+struct WindowHint
+{
+	uint32_t width;
+	uint32_t height;
+	std::string title;
+
+	uint32_t viewWidth;
+	uint32_t viewHeight;
+
+};
+
+class Shader;
+class VertexArray;
+class VertexBuffer;
+class IndexBuffer;
+class VertexBufferLayout;
+class Texture;
 
 class Quad2D
 {

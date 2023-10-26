@@ -2,6 +2,12 @@
 
 #include "Quad2D.h"
 
+#include "VertexArray.h"
+#include "Buffer.h"
+#include "VertexBufferLayout.h"
+#include "Shader.h"
+#include "Texture.h"
+
 Quad2D::Quad2D(const WindowHint& dimensions, const Coord2D& center, float width, float height, const std::string& texturePath)
 	:m_Dimensions(dimensions), m_Center(center), m_width(width), m_height(height), m_vertices{
 		// Positions										// Texture coord (Bottom left is 0,0)
