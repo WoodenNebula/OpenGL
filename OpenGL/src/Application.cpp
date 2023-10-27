@@ -1,12 +1,10 @@
 #include "stdpch.h"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-#include "Renderer.h"
 #include "VertexBufferLayout.h"
-#include "Texture.h"
+#include "Window.h"
+#include "Renderer.h"
 #include "Quad2D.h"
+#include "Texture.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -23,17 +21,13 @@ glm::mat4 mvp = glm::mat4(0.0f);
 
 int main()
 {
-	Renderer renderer;
-
-	renderer.InitGLFW(4, 3);
 	
-	WindowHint windowHint = { 800, 600 , "MAGIC", 800, 600};
-	renderer.CreateWindow(windowHint);
-	renderer.SetViewPort(windowHint.viewWidth, windowHint.viewHeight);
-	
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	std::unique_ptr<Window> window = std::unique_ptr<Window>(Window::Create());
 
+	Renderer renderer(window->GetWindow());
+
+	WindowProps windowProperties = { "SandBox", 800, 600 };
+	
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	{
@@ -42,7 +36,7 @@ int main()
 			250.0f, 250.0f,		0.0f, 0.0f, 	// 0 bottom left
 			500.0f, 250.0f,		1.0f, 0.0f,		// 1 bottom right
 			500.0f, 500.0f,		1.0f, 1.0f,		// 2 top right
-			250.0f, 500.0f,		0.0f, 1.0f,		// 3 top left
+			250.0f, 500.0f,		0.0f, 1.0f		// 3 top left
 
 		};
 
@@ -52,17 +46,17 @@ int main()
 		};
 
 		
-		Coord2D quadOneCenter = { 100.0f,  200.0f };
-		Coord2D quadTwoCenter = { 200.0f,  200.0f };
-		Coord2D quadThreeCenter = { 300.0f,  500.0f };
+		glm::vec2 quadOneCenter = { 100.0f,  200.0f };
+		glm::vec2 quadTwoCenter = { 200.0f,  200.0f };
+		glm::vec2 quadThreeCenter = { 300.0f,  500.0f };
 
 
 
-		quadList.push_back(std::make_unique<Quad2D>(windowHint, quadOneCenter, static_cast<float>(windowHint.width / 15.0f), static_cast<float>(windowHint.height / 10.0f), std::string("./res/textures/NGGYU.png")));
+		quadList.push_back(std::make_unique<Quad2D>(quadOneCenter, static_cast<float>(windowProperties.Width / 15.0f), static_cast<float>(windowProperties.Height / 10.0f), std::string("./res/textures/NGGYU.png")));
 
-		quadList.push_back(std::make_unique<Quad2D>(windowHint, quadTwoCenter, static_cast<float>(windowHint.width / 15.0f), static_cast<float>(windowHint.height / 25.0f), std::string("./res/textures/greyTile.png")));
+		quadList.push_back(std::make_unique<Quad2D>(quadTwoCenter, static_cast<float>(windowProperties.Width / 15.0f), static_cast<float>(windowProperties.Height / 25.0f), std::string("./res/textures/greyTile.png")));
 
-		quadList.push_back(std::make_unique<Quad2D>(windowHint, quadThreeCenter, static_cast<float>(windowHint.width / 15.0f), static_cast<float>(windowHint.height / 15.0f), std::string("./res/textures/awwsomeFace.png")));
+		quadList.push_back(std::make_unique<Quad2D>(quadThreeCenter, static_cast<float>(windowProperties.Width / 15.0f), static_cast<float>(windowProperties.Height / 15.0f), std::string("./res/textures/awwsomeFace.png")));
 
 
 		/*Normal Pipeline of the program
@@ -92,7 +86,7 @@ int main()
 		//0 is the slot that the texture is bound to
 		shader.SetUniform1i("u_Texture", 0);
 
-		proj = glm::ortho(0.0f, (float)windowHint.width, 0.0f, (float)windowHint.height);
+		proj = glm::ortho(0.0f, (float)windowProperties.Width, 0.0f, (float)windowProperties.Height);
 
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -121,6 +115,7 @@ int main()
 			}
 			else
 			{
+				///TODO: move clearscreen into window class?
 				renderer.ClearScreen();
 				glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(xOffset, yOffset, 0.0f));
 
@@ -133,21 +128,15 @@ int main()
 					quad->Draw();
 				}
 				
-
-				//renderer.SetBackGroundColor(glm::vec3(0.0912f));
-				//for (const auto& quad : quadList)
 			}
+			window->OnUpdate();
 
-			/* Swap front and back buffers */
-			glfwSwapBuffers(renderer.GetWindow());
-
-			/* Poll for events and processes */
-			glfwPollEvents();
-
-			renderer.ProcessInput();
 		}
 	}
-	renderer.Exit();
+
+	window->~Window();
+
+	glfwTerminate();
 
 	return 0;
 }
