@@ -1,8 +1,7 @@
 #include "stdpch.h"
 
+#include "GL\glew.h"
 #include "VertexArray.h"
-#include "VertexBufferLayout.h"
-#include "Buffer.h"
 
 VertexArray::VertexArray()
 	:m_VAO_ID(NULL)
