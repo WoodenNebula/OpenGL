@@ -39,7 +39,7 @@ void Window::Init(const WindowProps& props)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
 	/* Explicitly set the opengl profile to core (what we are using) */
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_DEBUG_CONTEXT);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_DEBUG_CONTEXT);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     const char* Title = props.Title.c_str();
