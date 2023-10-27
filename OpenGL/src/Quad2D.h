@@ -4,34 +4,16 @@
 
 #include "glm/glm.hpp"
 
-struct Coord2D
-{
-	float x;
-	float y;
-};
-
-struct WindowHint
-{
-	uint32_t width;
-	uint32_t height;
-	std::string title;
-
-	uint32_t viewWidth;
-	uint32_t viewHeight;
-
-};
-
-class Shader;
-class VertexArray;
-class VertexBuffer;
-class IndexBuffer;
-class VertexBufferLayout;
-class Texture;
+#include "VertexArray.h"
+#include "Buffer.h"
+#include "VertexBufferLayout.h"
+#include "Shader.h"
+#include "Texture.h"
 
 class Quad2D
 {
 private:
-	Coord2D m_Center;
+	glm::vec2 m_Center;
 	float m_width, m_height;
 
 	float m_vertices[16];
@@ -45,7 +27,7 @@ private:
 	std::unique_ptr<IndexBuffer> m_IB;
 	std::unique_ptr<VertexBufferLayout> m_Layout;
 	std::unique_ptr<Texture> m_Texture;
-	WindowHint m_Dimensions;
+	glm::vec2 m_WinDimensions;
 
 public:
 
@@ -54,7 +36,7 @@ public:
 	/// </summary>
 	/// <param name="center">Position at screen space(pixel) at which the quad will have its center</param>
 	/// <param name="scale"></param>
-	Quad2D(const WindowHint& dimensions, const Coord2D& center, float width, float height, const std::string& texturePath);
+	Quad2D(const glm::vec2& center, float width, float height, const std::string& texturePath);
 
 
 	~Quad2D();

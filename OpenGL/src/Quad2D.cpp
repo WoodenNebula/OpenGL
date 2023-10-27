@@ -8,8 +8,8 @@
 #include "Shader.h"
 #include "Texture.h"
 
-Quad2D::Quad2D(const WindowHint& dimensions, const Coord2D& center, float width, float height, const std::string& texturePath)
-	:m_Dimensions(dimensions), m_Center(center), m_width(width), m_height(height), m_vertices{
+Quad2D::Quad2D(const glm::vec2& center, float width, float height, const std::string& texturePath)
+	:m_Center(center), m_width(width), m_height(height), m_vertices{
 		// Positions										// Texture coord (Bottom left is 0,0)
 		m_Center.x - m_width, m_Center.y + m_height,		0.0f, 1.0f,			// 0 Top Left
 		m_Center.x + m_width, m_Center.y + m_height,		1.0f, 1.0f,			// 1 Top Right
