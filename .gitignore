@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/OpenGL/OpenGL.vcxproj.filters
+/OpenGL/build/OpenGL.exe
+/OpenGL/OpenGL.vcxproj
