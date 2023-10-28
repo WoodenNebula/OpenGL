@@ -26,6 +26,8 @@ int main()
 
 	Renderer renderer(window->GetWindowHandle());
 
+	// Test Commit
+
 	WindowProps windowProperties = { "SandBox", 800, 600 };
 	
 	std::cout << glGetString(GL_VERSION) << std::endl;
