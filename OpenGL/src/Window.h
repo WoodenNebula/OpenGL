@@ -17,7 +17,7 @@ struct WindowProps
 class Window
 {
 private:
-	GLFWwindow* m_Window;
+	GLFWwindow* m_WindowHandle;
 	struct WindowData
 	{
 		std::string Title;
@@ -35,7 +35,7 @@ public:
 
 	void OnUpdate();
 
-	inline GLFWwindow* GetWindow() const { return m_Window; }
+	inline GLFWwindow* GetWindowHandle() const { return m_WindowHandle; }
 
 	inline uint32_t GetWidth() const { return m_Data.Width; }
 	inline uint32_t GetHeight() const { return m_Data.Height;}

@@ -99,17 +99,17 @@ void Window::Init(const WindowProps& props)
         m_Data.Height = props.Height;
         m_Data.Width = props.Width;
 
-        m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), NULL, NULL);
+        m_WindowHandle = glfwCreateWindow((int)props.Width, (int)props.Height, props.Title.c_str(), NULL, NULL);
 
-        if (m_Window == NULL)
+        if (m_WindowHandle == NULL)
         {
             std::cout << "[Error] : line " << __LINE__ << " -> " << "\tWindow Creation Failed" << std::endl;
             glfwTerminate();
         }
 
-        glfwMakeContextCurrent(m_Window);
+        glfwMakeContextCurrent(m_WindowHandle);
 
-        glfwSetWindowUserPointer(m_Window, &m_Data);
+        glfwSetWindowUserPointer(m_WindowHandle, &m_Data);
         SetVSync(true);
     }
 
@@ -151,7 +151,7 @@ void Window::Init(const WindowProps& props)
 
 	// GLFW Callbacks
     {
-	    glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int newWidth, int newHeight)
+	    glfwSetFramebufferSizeCallback(m_WindowHandle, [](GLFWwindow* window, int newWidth, int newHeight)
 		    {
 			    glViewport(0, 0, newWidth, newHeight);
 			    WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -161,7 +161,7 @@ void Window::Init(const WindowProps& props)
 		    });
 
 
-	    glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+	    glfwSetKeyCallback(m_WindowHandle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		    {
                 // Exit on ESC
                 if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -241,7 +241,7 @@ void Window::Init(const WindowProps& props)
 		    });
 
 
-        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+        glfwSetMouseButtonCallback(m_WindowHandle, [](GLFWwindow* window, int button, int action, int mods)
             {
                 // Mouse Click Collision Check
                 if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
@@ -267,7 +267,7 @@ void Window::OnUpdate()
 	glfwPollEvents();
 
 	/* Swap front and back buffers */
-	glfwSwapBuffers(m_Window);
+	glfwSwapBuffers(m_WindowHandle);
 }
 
 void Window::SetVSync(bool enabled)
@@ -283,5 +283,8 @@ void Window::SetVSync(bool enabled)
 
 void Window::Shutdown()
 {
-	glfwDestroyWindow(m_Window);
+	glfwDestroyWindow(m_WindowHandle);
+
+    glfwTerminate();
+
 }
