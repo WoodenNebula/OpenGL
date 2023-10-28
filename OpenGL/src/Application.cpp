@@ -21,10 +21,10 @@ glm::mat4 mvp = glm::mat4(0.0f);
 
 int main()
 {
-	
+	// window lives through out this main scope allowing unique_ptr to clean up and avoid glfwTerminating twice
 	std::unique_ptr<Window> window = std::unique_ptr<Window>(Window::Create());
 
-	Renderer renderer(window->GetWindow());
+	Renderer renderer(window->GetWindowHandle());
 
 	WindowProps windowProperties = { "SandBox", 800, 600 };
 	
@@ -133,10 +133,6 @@ int main()
 
 		}
 	}
-
-	window->~Window();
-
-	glfwTerminate();
 
 	return 0;
 }
