@@ -26,7 +26,7 @@ int main()
 
 	Renderer renderer(window->GetWindowHandle());
 
-	// Test Commit
+	// Test Commit 2
 
 	WindowProps windowProperties = { "SandBox", 800, 600 };
 	
