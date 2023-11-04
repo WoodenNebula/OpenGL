@@ -17,7 +17,7 @@ private:
 	float m_width, m_height;
 
 	float m_vertices[16];
-	unsigned int m_indices[6];
+	uint32_t m_indices[6];
 
 	std::vector<glm::vec3> m_initialPosition;
 

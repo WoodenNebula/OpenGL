@@ -26,8 +26,6 @@ int main()
 
 	Renderer renderer(window->GetWindowHandle());
 
-	// Test Commit 6
-
 	WindowProps windowProperties = { "SandBox", 800, 600 };
 	
 	std::cout << glGetString(GL_VERSION) << std::endl;
@@ -42,7 +40,7 @@ int main()
 
 		};
 
-		unsigned int indices[] = {
+		uint32_t indices[] = {
 			0, 1, 2,
 			2, 3, 0
 		};
@@ -77,16 +75,16 @@ int main()
 		VA.AddBuffer(VBO, layout1);
 		
 		
-		Shader defaultShader("./res/shader/default.shader");
-		Shader shader("./res/shader/shader.shader");
+		Shader defaultShader("./res/shader/vertex/default.vertexShader", "./res/shader/fragment/default.fragmentShader");
+		Shader basicShader("./res/shader/vertex/basicShader.vertexShader", "./res/shader/fragment/basicShader.fragmentShader");
 
 		Texture happyFace("./res/textures/awesomeface.png");
 		Texture rick("./res/textures/NGGYU.png");
 
 
-		shader.Bind();
+		basicShader.Bind();
 		//0 is the slot that the texture is bound to
-		shader.SetUniform1i("u_Texture", 0);
+		basicShader.SetUniform1i("u_Texture", 0);
 
 		proj = glm::ortho(0.0f, (float)windowProperties.Width, 0.0f, (float)windowProperties.Height);
 
@@ -109,10 +107,10 @@ int main()
 
 				glm::mat4 mvp = proj * view * model;
 
-				shader.Bind();
-				shader.SetUniformMat4f("u_MVP", mvp);
+				basicShader.Bind();
+				basicShader.SetUniformMat4f("u_MVP", mvp);
 				renderer.ClearScreen();
-				renderer.Draw(VA, IBO, shader);
+				renderer.Draw(VA, IBO, basicShader);
 
 			}
 			else

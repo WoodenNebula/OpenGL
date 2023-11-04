@@ -27,19 +27,19 @@ Quad2D::Quad2D(const glm::vec2& center, float width, float height, const std::st
 			2, 3, 0
 	}
 {
-	m_VA = std::make_unique<VertexArray>();
+	m_VA.reset(new VertexArray());
+	m_VB.reset(new VertexBuffer(m_vertices, sizeof(m_vertices)));
 
-	m_VB = std::make_unique<VertexBuffer>(m_vertices, sizeof(m_vertices));
-	m_IB = std::make_unique<IndexBuffer>(m_indices, sizeof(m_indices));
+	m_IB.reset(new IndexBuffer(m_indices, sizeof(m_indices)));
 
-	m_Layout = std::make_unique<VertexBufferLayout>();
+	m_Layout.reset(new VertexBufferLayout());
 	m_Layout->Push<float>(2);	//pos
 	m_Layout->Push<float>(2);	//texture
 
 	m_VA->AddBuffer(*m_VB, *m_Layout);
 
-	m_QuadShader = std::make_unique<Shader>("./res/shader/quad.shader");
-	m_Texture = std::make_unique<Texture>(texturePath);
+	m_QuadShader.reset(new Shader("./res/shader/vertex/quad.vertexShader", "./res/shader/fragment/quad.fragmentShader"));
+	m_Texture.reset(new Texture(texturePath));
 }
 
 
