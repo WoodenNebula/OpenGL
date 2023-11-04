@@ -1,10 +1,10 @@
 #pragma once
-#include "stdpch.h"
+#include <string>
 
 class Texture
 {
 private:
-	uint32_t m_Renderer_ID;
+	uint32_t m_RendererID;
 	std::string m_FilePath;
 	unsigned char* m_LocalBufer;
 	//m_BPP = BytesPerPixel

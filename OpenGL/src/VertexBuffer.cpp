@@ -15,22 +15,22 @@ VertexBuffer::~VertexBuffer()
 	glDeleteBuffers(1, &m_RendererID);
 }
 
-inline uint32_t VertexBuffer::GetObjectID() const
+uint32_t VertexBuffer::GetObjectID() const
 {
 	return m_RendererID;
 }
 
-inline void VertexBuffer::Bind() const
+void VertexBuffer::Bind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 }
 
-inline void VertexBuffer::UnBind() const
+void VertexBuffer::UnBind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-inline void VertexBuffer::SetData(const void* data, const uint32_t size)
+void VertexBuffer::SetData(const void* data, const uint32_t size)
 {
 	this->Bind();
 	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);

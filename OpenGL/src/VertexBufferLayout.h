@@ -1,7 +1,9 @@
 #pragma once
-#include "stdpch.h"
 
 #include <GL\glew.h>
+
+#include "Assert.h"
+#include <vector>
 
 struct VertexBufferElement
 {
@@ -48,7 +50,7 @@ public:
 	}
 
 	template<>
-	void Push<unsigned int>(uint32_t count)
+	void Push<uint32_t>(uint32_t count)
 	{
 		m_Elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
 		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);

@@ -1,18 +1,21 @@
 #include "stdpch.h"
 
 #include "GL\glew.h"
+
 #include "VertexArray.h"
+#include "Buffer.h"
+#include "VertexBufferLayout.h"
 
 VertexArray::VertexArray()
-	:m_VAO_ID(NULL)
+	:m_RendererID(NULL)
 {
-	glGenVertexArrays(1, &m_VAO_ID);
-	glBindVertexArray(m_VAO_ID);
+	glGenVertexArrays(1, &m_RendererID);
+	glBindVertexArray(m_RendererID);
 }
 
 VertexArray::~VertexArray()
 {
-	glDeleteVertexArrays(1, &m_VAO_ID);
+	glDeleteVertexArrays(1, &m_RendererID);
 }
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
@@ -37,7 +40,7 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 
 void VertexArray::Bind() const
 {
-	glBindVertexArray(m_VAO_ID);
+	glBindVertexArray(m_RendererID);
 }
 
 void VertexArray::UnBind() const

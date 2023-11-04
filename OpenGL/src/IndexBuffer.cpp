@@ -4,12 +4,12 @@
 
 #include <GL/glew.h>
 
-IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int size)
+IndexBuffer::IndexBuffer(const uint32_t* data, uint32_t size)
 	:m_RendererID(0)
 {
-	glGenBuffers(1, &m_RendererID);
+	glCreateBuffers(1, &m_RendererID);
 
-	this->m_count = size / (sizeof(unsigned int));
+	this->m_count = size / (sizeof(uint32_t));
 
 	this->SetData(data, size);
 }
@@ -29,13 +29,13 @@ inline void IndexBuffer::UnBind() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-inline void IndexBuffer::SetData(const unsigned int* data, const unsigned int size)
+inline void IndexBuffer::SetData(const uint32_t* data, uint32_t size)
 {
 	this->Bind();
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
-unsigned int IndexBuffer::GetCount() const { return m_count; }
+uint32_t IndexBuffer::GetCount() const { return m_count; }
 
-unsigned int IndexBuffer::GetObjectID() const { return m_RendererID; };
+uint32_t IndexBuffer::GetObjectID() const { return m_RendererID; };
 

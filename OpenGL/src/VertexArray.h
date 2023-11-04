@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Buffer.h"
-#include "VertexBufferLayout.h"
+// Forward declarations to avoid including the headers
+class VertexBuffer;
+class VertexBufferLayout;
 
 class VertexArray
 {
 private:
-	unsigned int m_VAO_ID;
+	uint32_t m_RendererID;
 
 public:
 	VertexArray();
