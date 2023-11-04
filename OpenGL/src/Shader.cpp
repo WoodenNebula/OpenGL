@@ -4,11 +4,13 @@
 #include <GL/glew.h>
 
 
-Shader::Shader(const char* shaderPath)
-	:m_FilePath(shaderPath), m_ProgramID(0)
+Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath)
+	:m_VertexFilePath(vertexFilePath), m_FragmentFilePath(fragmentFilePath),  m_ProgramID(0)
 {
-	ShaderSources source = ParseShader(shaderPath);
-	m_ProgramID = CreateShaderProgram(source.VertexSrc, source.FragmentSrc);
+	std::string vertexSrc = ParseShader(vertexFilePath);
+	std::string fragmentSrc = ParseShader(fragmentFilePath);
+
+	m_ProgramID = CreateShaderProgram(vertexSrc, fragmentSrc);
 }
 
 void Shader::Bind() const
@@ -27,45 +29,33 @@ uint32_t Shader::GetProgramID()
 }
 
 
-ShaderSources Shader::ParseShader(const char* filePath)
+std::string Shader::ParseShader(const char* filePath)
 {
 	std::fstream shaderFile(filePath);
 	std::string line;
-	std::stringstream ss[2];
-	ShaderType type = ShaderType::NONE;
+	std::stringstream ss;
 
 	//Ensure that shader file is open
 	if (!shaderFile.is_open())
 	{
-		std::cout << "ERROR::SHADER::FILE::READ -> Couldn't open shader file!" << std::endl;
+		std::cout << "ERROR::SHADER::FILE::READ -> Couldn't open shader file!\n" << filePath << std::endl;
 		__debugbreak();
 	}
 
 	while (std::getline(shaderFile, line))
 	{
-		if (line.find("#shader") != std::string::npos)
-		{
-			if (line.find("vertex") != std::string::npos)
-				type = ShaderType::VERTEX;
-			else if (line.find("fragment") != std::string::npos)
-				type = ShaderType::FRAGMENT;
-
-		}
-		else
-		{
-			ss[(int)type] << line.c_str() << "\n";
-		}
+		ss << line.c_str() << "\n";
 	}
 
-	return { ss[(int)ShaderType::VERTEX].str(), ss[(int)ShaderType::FRAGMENT].str() };
+	return ss.str() ;
 }
 
 /* creates a shader program that has to be attached and linked */
 uint32_t Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc)
 {
 	uint32_t vertexShader, fragmentShader;
-	vertexShader = CompileShader(ShaderType::VERTEX, vertexShaderSrc.c_str());
-	fragmentShader = CompileShader(ShaderType::FRAGMENT, fragmentShaderSrc.c_str());
+	vertexShader = CompileShader(ShaderType::VERTEX, vertexShaderSrc);
+	fragmentShader = CompileShader(ShaderType::FRAGMENT, fragmentShaderSrc);
 
 
 	uint32_t shaderProgram = glCreateProgram();
@@ -75,6 +65,24 @@ uint32_t Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const s
 	glLinkProgram(shaderProgram);
 
 
+	// Error Checking
+	int isLinked = 0;
+
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &isLinked);
+	if (!isLinked)
+	{
+		int length = 0;
+		glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &length);
+
+		char* infoLog = (char*)_malloca(length * sizeof(char));
+		glGetShaderInfoLog(shaderProgram, length, &length, infoLog);
+
+		std::cout << "ERROR::SHADER : LINKING FAILED \n" << infoLog << std::endl;
+
+		glDeleteShader(shaderProgram);
+
+		return 0;
+	}
 
 	glValidateProgram(shaderProgram);
 
@@ -87,7 +95,7 @@ uint32_t Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const s
 uint32_t Shader::CompileShader(ShaderType type, const std::string& shaderSrc)
 {
 	/// Compilation Process
-	uint32_t shaderID;
+	uint32_t shaderID = 0;
 	const char* src = shaderSrc.c_str();
 	if (type == ShaderType::VERTEX)
 	{
@@ -106,11 +114,11 @@ uint32_t Shader::CompileShader(ShaderType type, const std::string& shaderSrc)
 	glCompileShader(shaderID);
 
 	// Error Handling
-	int success;
-	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &success);
-	if (!success)
+	int isCompiled = 0;
+	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &isCompiled);
+	if (!isCompiled)
 	{
-		int length;
+		int length = 0;
 		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &length);
 
 		char* infoLog = (char*)_malloca(length * sizeof(char));
@@ -118,6 +126,8 @@ uint32_t Shader::CompileShader(ShaderType type, const std::string& shaderSrc)
 
 		std::cout << "ERROR::SHADER::" << (type == ShaderType::VERTEX ? "VERTEX" : "FRAGMENT") << "::COMPILATION_FAILED\n"
 			<< infoLog << std::endl;
+
+		glDeleteShader(shaderID);
 
 		return 0;
 	}

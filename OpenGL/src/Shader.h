@@ -1,6 +1,8 @@
 #pragma once
 
-#include "stdpch.h"
+#include <string>
+#include <unordered_map>
+
 #include "glm/glm.hpp"
 
 
@@ -9,21 +11,16 @@ enum class ShaderType
 	NONE = -1, VERTEX = 0, FRAGMENT = 1
 };
 
-struct ShaderSources
-{
-	std::string VertexSrc;
-	std::string FragmentSrc;
-};
-
 class Shader
 {
 private:
 	uint32_t m_ProgramID;
-	const std::string m_FilePath;
+	std::string m_VertexFilePath;
+	std::string m_FragmentFilePath;
 	mutable std::unordered_map<std::string, int> m_UniformLocationCache;
 
 public:
-	Shader(const char* shaderPath);
+	Shader(const char* vertexFilePath, const char* fragmentFilePath);
 	uint32_t GetProgramID();
 
 	void Bind() const;
@@ -37,7 +34,7 @@ public:
 
 	uint32_t GetUniformLocation(const std::string& name) const;
 private:
-	ShaderSources ParseShader(const char* filePath);
+	std::string ParseShader(const char* filePath);
 	uint32_t CreateShaderProgram(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc);
 	uint32_t CompileShader(ShaderType type, const std::string& shaderSrc);
 };
