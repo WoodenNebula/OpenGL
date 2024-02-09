@@ -1,4 +1,4 @@
-#include "stdpch.h"
+ 
 
 #include "Quad2D.h"
 

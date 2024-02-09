@@ -1,4 +1,4 @@
-#include "stdpch.h"
+#include <stdint.h>
 
 #include "Buffer.h"
 

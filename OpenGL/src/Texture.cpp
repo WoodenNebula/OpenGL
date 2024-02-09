@@ -1,4 +1,4 @@
-#include "stdpch.h"
+ 
 
 #include "Texture.h"
 #include <GL\glew.h>

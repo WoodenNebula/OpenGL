@@ -1,5 +1,5 @@
 #pragma once
-#include "stdpch.h"
+ 
 
 #include "VertexArray.h"
 #include "Shader.h"

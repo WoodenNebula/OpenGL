@@ -1,4 +1,5 @@
 #pragma once
+typedef unsigned int uint32_t;
 
 // Forward declarations to avoid including the headers
 class VertexBuffer;

@@ -2,7 +2,7 @@
 
 #include <GL\glew.h>
 
-#include "Assert.h"
+#include "CustomAssert.h"
 #include <vector>
 
 struct VertexBufferElement

@@ -1,4 +1,9 @@
-#include "stdpch.h"
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <CustomAssert.h>
+
 #include "Shader.h"
 
 #include <GL/glew.h>

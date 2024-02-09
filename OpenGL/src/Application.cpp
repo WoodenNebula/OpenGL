@@ -1,4 +1,6 @@
-#include "stdpch.h"
+#include <iostream>
+#include <memory>
+#include <assert.h>
 
 #include "VertexBufferLayout.h"
 #include "Window.h"

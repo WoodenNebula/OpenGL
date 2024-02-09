@@ -1,4 +1,5 @@
-#include "stdpch.h"
+#include <iostream>
+#include <string>
 
 #include "GL\glew.h"
 #include "Window.h"
