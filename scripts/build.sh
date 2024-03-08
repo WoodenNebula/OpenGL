@@ -1,20 +1,27 @@
 # !/bin/sh
 PRJ_NAME="OpenGL"
+parent_path=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
+cd $parent_path
+cd ".."
 
 BuildProject () {
     vendor/premake/premake5 gmake
-    make
+    cd "$PRJ_NAME/" && make
     echo "---------------"
 }
 
 
 RunProject () {
-    if [ -d "$PRJ_NAME/build/" ]
+    exedir=$(find -name "$PRJ_NAME.out")
+    if [ -z "$exedir" ]
     then
-        $PRJ_NAME/build/**/$PRJ_NAME/$PRJ_NAME
-    else
+        echo "$PRJ_NAME.out not found"
         echo "Project Not Compiled"
         echo "---------------"
+    else
+        clear -x
+        echo "Running $exedir"
+        $exedir
     fi
 }
 
@@ -53,4 +60,4 @@ then
     CleanProject
     exit
 fi
-# echo "Usage are run, buildrun, clean, rebuild"
+else "Bad args"
