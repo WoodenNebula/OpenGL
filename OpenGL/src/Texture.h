@@ -1,25 +1,23 @@
 #pragma once
 #include <string>
 
-class Texture
-{
-private:
-	uint32_t m_RendererID;
-	std::string m_FilePath;
-	unsigned char* m_LocalBufer;
-	//m_BPP = BytesPerPixel
-	int m_Width, m_Height, m_BPP;
-public:
-	Texture(const std::string& path);
-	~Texture();
+class Texture {
+   private:
+    uint32_t m_RendererID;
+    std::string m_FilePath;
+    unsigned char* m_LocalBufer;
+    // m_BPP = BytesPerPixel
+    int m_Width, m_Height, m_BPP;
 
-	void Bind(uint32_t slot = 0) const;
+   public:
+    Texture(const std::string& path);
+    ~Texture();
 
-	void UnBind() const;
+    void Bind(uint32_t slot = 0) const;
 
-	inline int GetWidth() const { return m_Width; }
-	inline int GetHeight() const { return m_Width; }
-	inline int GetBytesPerPixel() const { return m_BPP; }
+    void UnBind() const;
 
+    inline int GetWidth() const { return m_Width; }
+    inline int GetHeight() const { return m_Width; }
+    inline int GetBytesPerPixel() const { return m_BPP; }
 };
-

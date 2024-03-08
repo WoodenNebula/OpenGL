@@ -3,19 +3,18 @@ typedef unsigned int uint32_t;
 
 // Forward declarations to avoid including the headers
 class VertexBuffer;
-class VertexBufferLayout;
+#include "VertexBufferLayout.h"
 
-class VertexArray
-{
-private:
-	uint32_t m_RendererID;
+class VertexArray {
+   private:
+    uint32_t m_RendererID;
 
-public:
-	VertexArray();
-	~VertexArray();
+   public:
+    VertexArray();
+    ~VertexArray();
 
-	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
+    void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
 
-	void Bind() const;
-	void UnBind() const;
+    void Bind() const;
+    void UnBind() const;
 };

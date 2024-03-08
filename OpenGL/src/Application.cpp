@@ -10,7 +10,6 @@
 #include "Window.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "myHeader.h"
 
 // GLOBAL VARIABLES (AKA STATE VARIABLES)
 bool startRendering = false;
