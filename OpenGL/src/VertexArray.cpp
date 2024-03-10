@@ -1,10 +1,10 @@
 #include "VertexArray.h"
 
 #include "Buffer.h"
-#include "GL/glew.h"
 #include "VertexBufferLayout.h"
+#include "glad/glad.h"
 
-VertexArray::VertexArray() : m_RendererID(NULL) {
+VertexArray::VertexArray() : m_RendererID(0) {
     glGenVertexArrays(1, &m_RendererID);
     glBindVertexArray(m_RendererID);
 }

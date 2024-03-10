@@ -44,8 +44,8 @@ Quad2D::Quad2D(const glm::vec2& center, float width, float height,
     m_IB.reset(new IndexBuffer(m_indices, sizeof(m_indices)));
 
     m_Layout.reset(new VertexBufferLayout());
-    m_Layout->Push<float>(2);  // pos
-    m_Layout->Push<float>(2);  // texture
+    m_Layout->Push(2, DataType::FLOAT);  // pos
+    m_Layout->Push(2, DataType::FLOAT);  // texture
 
     m_VA->AddBuffer(*m_VB, *m_Layout);
 

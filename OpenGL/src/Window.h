@@ -2,6 +2,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <string>
+
 struct WindowProps {
     std::string Title;
     uint32_t Width, Height;

@@ -10,17 +10,22 @@ project "OpenGL"
     objdir ("%{wks.location}/build/obj/" .. "%{wks.outputdir}" .. "/%{prj.name}")
 
     includedirs {
-        "dependencies",
-        "dependencies/GL",
-        "dependencies/glad",
-        "dependencies/glfw",
-        "src/vendor/"
+        "src",
+        "src/vendor",
+        "dependencies/glad/include",
+        "dependencies/GLFW/include",
+
     }
 
     libdirs {
-        "dependencies/lib/GL",
-        "dependencies/lib/GLFW",
+        "dependencies/GL/lib",
+        "dependencies/GLFW/lib",
     }
+
+    links {
+        "glad",
+    }
+
 
     files {
         "src/**.hpp", "src/**.h",
@@ -29,16 +34,13 @@ project "OpenGL"
 
     filter "system:linux"
         links {
-            "Glad",
-            "libglfw.so.3.3",
+            "GL",
+            "glfw"
         }
     filter{}
 
     filter {"system:windows"}
         links {
-            "Glad",
-            "glew32s.lib",
-            "GLFW3.lib",
             "opengl32.lib",
         }
     filter{}

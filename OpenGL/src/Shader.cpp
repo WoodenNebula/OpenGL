@@ -1,13 +1,14 @@
 #include "Shader.h"
 
 #include <CustomAssert.h>
-#include <GL/glew.h>
 #include <memory.h>
 
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+
+#include "glad/glad.h"
 
 Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath)
     : m_VertexFilePath(vertexFilePath),

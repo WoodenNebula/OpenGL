@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "GL/glew.h"
+#include "glad/glad.h"
 
 Window* Window::Create(const WindowProps& props) { return new Window(props); }
 
@@ -48,7 +48,7 @@ void Window::Init(const WindowProps& props) {
             std::cout << "GLFW::[ERROR] - " << errCode << " : " << errMsg
                       << std::endl;
 #ifdef _DEBUG
-            __debugbreak();
+            exit(EXIT_FAILURE);
 #endif  // _DEBUG
         });
 
@@ -79,7 +79,7 @@ void Window::Init(const WindowProps& props) {
         m_Data.Width = props.Width;
 
         m_WindowHandle = glfwCreateWindow((int)props.Width, (int)props.Height,
-                                          props.Title.c_str(), NULL, NULL);
+                                          props.Title.c_str(), 0, 0);
 
         if (m_WindowHandle == NULL) {
             std::cout << "[Error] : line " << __LINE__ << " -> "
@@ -93,13 +93,11 @@ void Window::Init(const WindowProps& props) {
         SetVSync(true);
     }
 
-    // GLEW Initialization
+    // GLAD Initialization
     {
-        glewExperimental = true;
-        GLenum err = glewInit();
-        if (err != GLEW_OK) {
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
             // Problem: glewInit failed, something is seriously wrong.
-            std::cout << "glewInit failed, aborting." << std::endl;
+            std::cout << "gladInit failed, aborting." << std::endl;
             glfwTerminate();
         }
 
@@ -123,7 +121,7 @@ void Window::Init(const WindowProps& props) {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         glViewport(0, 0, m_Data.Width, m_Data.Height);
-    }  // GLEW Initialization
+    }  // GLAD Initialization
 
     // GLFW Callbacks
     {

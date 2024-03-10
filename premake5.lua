@@ -3,14 +3,17 @@ workspace "OpenGL"
     architecture "x64"
     location "./OpenGL/"
 
+
+    defines { "GLFW_INCLUDE_NONE" }
+
     filter "configurations:Debug"
-    defines { "DEBUG", "_DEBUG" }
-    symbols "On"
+        defines { "DEBUG", "_DEBUG" }
+        symbols "On"
     filter{}
 
     filter "configurations:Release"
-    defines { "NDEBUG" }
-    optimize "On"
+        defines { "NDEBUG" }
+        optimize "On"
     filter{}
 
     filter "system:windows"
@@ -24,7 +27,7 @@ workspace "OpenGL"
 
     outputdir = "%{cfg.architecture}-%{cfg.system}-%{cfg.buildcfg}"
 
-
+    include "OpenGL/dependencies/glad/build-glad.lua"
     include "OpenGL/Project.lua"
 
 

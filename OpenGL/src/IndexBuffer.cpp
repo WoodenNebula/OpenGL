@@ -1,7 +1,7 @@
-#include <GL/glew.h>
 #include <stdint.h>
 
 #include "Buffer.h"
+#include "glad/glad.h"
 
 IndexBuffer::IndexBuffer(const uint32_t* data, uint32_t size)
     : m_RendererID(0) {

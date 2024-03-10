@@ -1,10 +1,9 @@
 #pragma once
 
-#include <GL/glew.h>
-
 #include <vector>
 
 #include "CustomAssert.h"
+#include "glad/glad.h"
 
 struct VertexBufferElement {
     uint32_t type;
@@ -25,6 +24,8 @@ struct VertexBufferElement {
     }
 };
 
+enum class DataType { FLOAT = 0, U_INT, U_CHAR };
+
 class VertexBufferLayout {
    private:
     std::vector<VertexBufferElement> m_Elements;
@@ -34,35 +35,35 @@ class VertexBufferLayout {
     VertexBufferLayout() : m_Stride(0){};
     ~VertexBufferLayout(){};
 
-    /// <typeparam name="T">:type of vertices data</typeparam>
     /// <param name="count">:number of elements per vertex attrib. For more than
     /// one attrib, this function has to be called each time with the count of
     /// elements in each attrib separately</param>
-    template <typename T>
-    void Push(uint32_t count) {
-        ASSERT(false);
+    void Push(uint32_t count, DataType type) {
+        switch (type) {
+            case DataType::FLOAT:
+                m_Elements.push_back({GL_FLOAT, count, GL_FALSE});
+                m_Stride +=
+                    count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
+                break;
+
+            case DataType::U_INT:
+                m_Stride +=
+                    count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
+                m_Elements.push_back({GL_UNSIGNED_INT, count, GL_FALSE});
+
+            case DataType::U_CHAR:
+                m_Elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
+                m_Stride += count * VertexBufferElement::GetSizeOfType(
+                                        GL_UNSIGNED_BYTE);
+            default:
+                ASSERT(false);
+                break;
+        }
     }
 
     inline const std::vector<VertexBufferElement>& GetElements() const {
         return m_Elements;
     }
+
     inline uint32_t GetStride() const { return m_Stride; }
 };
-
-template <>
-void VertexBufferLayout::Push<float>(uint32_t count) {
-    m_Elements.push_back({GL_FLOAT, count, GL_FALSE});
-    m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
-}
-
-template <>
-void VertexBufferLayout::Push<uint32_t>(uint32_t count) {
-    m_Elements.push_back({GL_UNSIGNED_INT, count, GL_FALSE});
-    m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
-}
-
-template <>
-void VertexBufferLayout::Push<unsigned char>(uint32_t count) {
-    m_Elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
-    m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE);
-}

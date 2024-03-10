@@ -1,5 +1,3 @@
-
-
 #include "Renderer.h"
 
 Renderer::Renderer(GLFWwindow* Window) : m_window(Window), m_speed(0.75f) {}
