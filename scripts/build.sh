@@ -41,13 +41,8 @@ then
     exit
 elif [ "$1" = "run" ]
 then
-    if [ -f "Makefile" ]
-    then
-        echo "Running project $PRJ_NAME"
-        RunProject
-    else
-        echo "PROJECT NOT BUILT YET"
-    fi
+    cd "$PRJ_NAME/"
+    RunProject
     exit
 elif [ "$1" = "build" ]
 then
@@ -59,5 +54,5 @@ elif [ "$1" = "clean" ]
 then
     CleanProject
     exit
-fi
 else "Bad args"
+fi
