@@ -11,25 +11,13 @@ Quad2D::Quad2D(const glm::vec2& center, float width, float height,
     : m_Center(center),
       m_width(width),
       m_height(height),
+      // clang-format off
       m_vertices{
-          // Positions
-          // // Texture coord (Bottom left is 0,0)
-          m_Center.x - m_width,
-          m_Center.y + m_height,
-          0.0f,
-          1.0f,  // 0 Top Left
-          m_Center.x + m_width,
-          m_Center.y + m_height,
-          1.0f,
-          1.0f,  // 1 Top Right
-          m_Center.x + m_width,
-          m_Center.y - m_height,
-          1.0f,
-          0.0f,  // 2 Bottom Right
-          m_Center.x - m_width,
-          m_Center.y - m_height,
-          0.0f,
-          0.0f  // 3 Bottom Left
+          // Positions                                 // Texture coord (Bottom left is 0,0)
+          m_Center.x - m_width, m_Center.y + m_height, 0.0f, 1.0f,  // 0 Top Left
+          m_Center.x + m_width, m_Center.y + m_height, 1.0f, 1.0f,  // 1 Top Right
+          m_Center.x + m_width, m_Center.y - m_height, 1.0f, 0.0f,  // 2 Bottom Right
+          m_Center.x - m_width, m_Center.y - m_height, 0.0f, 0.0f  // 3 Bottom Left
       },
       m_initialPosition{
           glm::vec3(m_vertices[0], m_vertices[1], 0.0f),   // 0
@@ -37,7 +25,7 @@ Quad2D::Quad2D(const glm::vec2& center, float width, float height,
           glm::vec3(m_vertices[8], m_vertices[9], 0.0f),   // 2
           glm::vec3(m_vertices[12], m_vertices[13], 0.0f)  // 3
       },
-      m_indices{0, 1, 2, 2, 3, 0} {
+      m_indices{0, 1, 2, 2, 3, 0} {  // clang-format on
     m_VA.reset(new VertexArray());
     m_VB.reset(new VertexBuffer(m_vertices, sizeof(m_vertices)));
 
