@@ -5,7 +5,7 @@
 #include "glad/glad.h"
 
 VertexArray::VertexArray() : m_RendererID(0) {
-    glGenVertexArrays(1, &m_RendererID);
+    glCreateVertexArrays(1, &m_RendererID);
     glBindVertexArray(m_RendererID);
 }
 
