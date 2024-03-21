@@ -8,16 +8,11 @@
 
 class Renderer {
    private:
-    float m_speed;
     GLFWwindow* m_window;
 
    public:
     Renderer(GLFWwindow* Window);
     ~Renderer();
-
-    void SetSpeed(float speed);
-
-    void ProcessInput();
 
     // Returns true if window is closed and the render loop is to be stopped
     bool EndRenderLoop();
